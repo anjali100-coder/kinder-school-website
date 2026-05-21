@@ -73,11 +73,7 @@ export function HeroSection() {
           {/* Hero Image */}
           <div className="relative hidden lg:block">
             <div className="relative z-10 shadow-2xl bg-white border-4 border-yellow-300 aspect-[4/3]">
-              <ImageUploadPlaceholder
-                id="hero-building"
-                alt="Cecil Convent School Junior Playway - Main Building"
-                containerClassName="w-full h-full"
-              />
+              <img src="/main.jpg" alt="Cecil Convent School" className="w-full h-full object-cover rounded-2xl" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none rounded-3xl"></div>
             </div>
             {/* Decorative background shapes */}

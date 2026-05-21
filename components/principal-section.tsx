@@ -30,12 +30,7 @@ export function PrincipalSection() {
               <div className="flex justify-center md:justify-start">
                 <div className="relative">
                   <div className="w-48 h-48 rounded-full overflow-hidden border-4 border-yellow-300 shadow-lg bg-gradient-to-br from-blue-100 to-yellow-100 flex-shrink-0">
-                    <ImageUploadPlaceholder
-                      id="principal-photo"
-                      alt="Principal"
-                      isCircle
-                      containerClassName="w-full h-full"
-                    />
+                    <img src="images/principal.jpg.jpeg" alt="Principal" className="w-full h-full object-cover" />
                   </div>
                   {/* Decorative ring */}
                   <div className="absolute -inset-2 border-4 border-dashed border-blue-300 rounded-full"></div>
@@ -50,7 +45,7 @@ export function PrincipalSection() {
                 </blockquote>
                 
                 <div className="border-t-2 border-yellow-300 pt-4">
-                  <h3 className="text-xl font-bold text-blue-900">Mrs. Sunita Sharma</h3>
+                  <h3 className="text-xl font-bold text-blue-900">Mrs. Parul Garg</h3>
                   <p className="text-blue-600 font-bold">Principal</p>
                   <p className="text-sm text-gray-700 mt-1 font-semibold">M.Ed., 20+ Years in Education</p>
                 </div>

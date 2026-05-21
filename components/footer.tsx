@@ -148,9 +148,18 @@ export function Footer() {
       {/* Bottom Bar */}
       <div className="border-t border-white/20 py-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-blue-100">
-          <p className="font-semibold">
-            © 2024 Cecil Convent School Junior Playway. All rights reserved.
-          </p>
+          <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4 text-center md:text-left">
+            <p className="font-semibold">
+              © 2024 Cecil Convent School Junior Playway. All rights reserved.
+            </p>
+            <span className="hidden md:inline text-blue-400">|</span>
+            <Link 
+              href="/admin" 
+              className="text-xs text-blue-300 hover:text-yellow-300 transition-colors font-semibold flex items-center gap-1"
+            >
+              🔒 Admin Portal
+            </Link>
+          </div>
           <p className="flex items-center gap-1 font-semibold">
             Made with <Heart className="w-4 h-4 text-pink-400 fill-pink-400" /> for our little stars
           </p>

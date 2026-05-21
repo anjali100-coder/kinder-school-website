@@ -4,6 +4,7 @@ import { ImageUploadPlaceholder } from '@/components/image-upload-placeholder'
 const staffMembers = [
   {
     id: 1,
+    
     name: 'Mrs. Priya Gupta',
     role: 'Senior Teacher',
     qualification: 'B.Ed., NTT',
@@ -72,12 +73,11 @@ export function StaffSection() {
                 {/* Photo - Circular Frame */}
                 <div className="relative mx-auto mb-4">
                   <div className="w-28 h-28 mx-auto rounded-full overflow-hidden border-4 border-yellow-300 bg-gradient-to-br from-blue-100 to-yellow-100 group-hover:border-blue-400 transition-colors flex-shrink-0 shadow-lg">
-                    <ImageUploadPlaceholder
-                      id={`staff-${staff.id}`}
-                      alt={staff.name}
-                      isCircle
-                      containerClassName="w-full h-full"
-                    />
+                    <img 
+  src="https://img.freepik.com/premium-photo/beautiful-indian-teacher_981168-2922.jpg?semt=ais_hybrid&w=740&q=80" 
+  alt="Staff Member" 
+  className="w-full h-full object-cover rounded-full" 
+/>
                   </div>
                   {/* Decorative dots */}
                   <div className="absolute -top-1 -right-1 w-4 h-4 bg-blue-600 rounded-full shadow-md"></div>

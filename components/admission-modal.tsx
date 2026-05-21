@@ -51,9 +51,30 @@ export function AdmissionModal({ isOpen, onClose }: AdmissionModalProps) {
     setIsSubmitting(true)
 
     try {
-      // Simulate form submission
-      await new Promise(resolve => setTimeout(resolve, 1500))
+      // Simulate network latency
+      await new Promise(resolve => setTimeout(resolve, 1000))
       
+      // Construct new inquiry
+      const newInquiry = {
+        id: Math.random().toString(36).substring(2, 11),
+        studentName: formData.studentName.trim(),
+        class: formData.class,
+        fatherName: formData.fatherName.trim(),
+        phoneNumber: formData.phoneNumber.replace(/\D/g, ''),
+        status: 'Pending',
+        date: new Date().toISOString(),
+        notes: ''
+      }
+
+      // Save to localStorage
+      try {
+        const stored = localStorage.getItem('cecil_school_inquiries')
+        const currentInquiries = stored ? JSON.parse(stored) : []
+        localStorage.setItem('cecil_school_inquiries', JSON.stringify([newInquiry, ...currentInquiries]))
+      } catch (err) {
+        console.error('Failed to save inquiry to localStorage:', err)
+      }
+
       toast.success('Admission inquiry submitted successfully! We will contact you soon.')
       setFormData({ studentName: '', class: '', fatherName: '', phoneNumber: '' })
       onClose()
