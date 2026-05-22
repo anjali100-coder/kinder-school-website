@@ -9,6 +9,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { X } from 'lucide-react'
 import { toast } from 'sonner'
 
+// 1. YAHAN HUMNE SUPABASE KO IMPORT KIYA HAI
+import { supabase } from '@/lib/supabase'
+
 interface AdmissionModalProps {
   isOpen: boolean
   onClose: () => void
@@ -51,28 +54,22 @@ export function AdmissionModal({ isOpen, onClose }: AdmissionModalProps) {
     setIsSubmitting(true)
 
     try {
-      // Simulate network latency
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      
-      // Construct new inquiry
-      const newInquiry = {
-        id: Math.random().toString(36).substring(2, 11),
-        studentName: formData.studentName.trim(),
-        class: formData.class,
-        fatherName: formData.fatherName.trim(),
-        phoneNumber: formData.phoneNumber.replace(/\D/g, ''),
-        status: 'Pending',
-        date: new Date().toISOString(),
-        notes: ''
-      }
+      // 2. YAHAN HUM DATA KO SUPABASE DATABASE MEIN BHEJ RAHE HAIN
+      const { error } = await supabase
+        .from('enquiries')
+        .insert([
+          {
+            student_name: formData.studentName.trim(),
+            class_name: formData.class,
+            father_name: formData.fatherName.trim(),
+            phone_number: formData.phoneNumber.replace(/\D/g, ''),
+          }
+        ])
 
-      // Save to localStorage
-      try {
-        const stored = localStorage.getItem('cecil_school_inquiries')
-        const currentInquiries = stored ? JSON.parse(stored) : []
-        localStorage.setItem('cecil_school_inquiries', JSON.stringify([newInquiry, ...currentInquiries]))
-      } catch (err) {
-        console.error('Failed to save inquiry to localStorage:', err)
+      // Agar data save hone mein koi error aaye
+      if (error) {
+        console.error('Supabase Error:', error)
+        throw error
       }
 
       toast.success('Admission inquiry submitted successfully! We will contact you soon.')
