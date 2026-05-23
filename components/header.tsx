@@ -74,6 +74,11 @@ export function Header() {
                   {link.label}
                 </Link>
               ))}
+              <Link href="/fee-structure" className="mr-4">
+  <button className="bg-white border-2 border-blue-900 text-blue-900 px-5 py-2 rounded-full hover:bg-blue-50 transition duration-300 font-medium hidden md:inline-block">
+    Fee Structure
+  </button>
+</Link>
               <Button 
                 onClick={() => setIsAdmissionModalOpen(true)}
                 className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-blue-900 hover:from-yellow-500 hover:to-yellow-600 rounded-full font-bold shadow-lg px-8 py-2 transform hover:scale-105 transition-all text-base"
