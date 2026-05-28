@@ -141,15 +141,36 @@ export function Header() {
             <div className="lg:hidden mt-4 pb-4 border-t-3 border-yellow-300 pt-4">
               <div className="flex flex-col gap-2">
                 {navLinks.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className="text-blue-900 hover:text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-600 transition-colors"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {link.label}
-                  </Link>
-                ))}
+  <div key={link.label} className="w-full">
+    {/* Agar link mein dropdown/subLinks hain */}
+    {(link.subLinks || link.dropdownItems) ? (
+      <div className="flex flex-col">
+        <span className="text-blue-900 font-bold py-3 px-4 border-b border-blue-100">{link.label} ▼</span>
+        <div className="flex flex-col pl-6 bg-blue-50/50 py-2">
+          {(link.subLinks || link.dropdownItems).map((subLink) => (
+            <Link
+              key={subLink.label}
+              href={subLink.href}
+              className="text-blue-800 hover:text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors block"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              {subLink.label}
+            </Link>
+          ))}
+        </div>
+      </div>
+    ) : (
+      /* Agar simple seedha link hai */
+      <Link
+        href={link.href}
+        className="block text-blue-900 hover:text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-600 transition-colors"
+        onClick={() => setIsMenuOpen(false)}
+      >
+        {link.label}
+      </Link>
+    )}
+  </div>
+))}
                 <Button 
                   onClick={() => {
                     setIsAdmissionModalOpen(true)
