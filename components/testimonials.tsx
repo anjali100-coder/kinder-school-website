@@ -1,0 +1,89 @@
+import React from 'react';
+
+const reviews = [
+  {
+    id: 1,
+    parentName: "Rahul & Pooja Verma",
+    childClass: "Parents of Class 2 Student",
+    review: "Cecil Convent School has been a true blessing for our child. The teachers are incredibly caring, and the balance between academics and extracurricular activities is perfect. Proud to be associated with Ambala's best school!",
+    rating: 5,
+    bgColor: "bg-blue-50"
+  },
+  {
+    id: 2,
+    parentName: "Sneha Rajput",
+    childClass: "Parent of UKG Student",
+    review: "The facilities here are absolutely top-notch. I love the smart classrooms and how much my daughter enjoys going to school every single day. The foundation they are building is fantastic.",
+    rating: 5,
+    bgColor: "bg-purple-50"
+  },
+  {
+    id: 3,
+    parentName: "Amit Sharma",
+    childClass: "Parent of Class 5 Student",
+    review: "We have noticed a massive improvement in our son's confidence and communication skills. The focus on discipline along with modern education is exactly what we were looking for. Highly recommended!",
+    rating: 5,
+    bgColor: "bg-teal-50"
+  }
+];
+
+export default function Testimonials() {
+  return (
+    <section className="py-20 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Section Heading */}
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">What Our Parents Say</h2>
+          <div className="w-24 h-1 bg-yellow-400 mx-auto rounded-full mb-6"></div>
+          <p className="text-gray-600 max-w-2xl mx-auto text-lg">
+            Don't just take our word for it. Hear from the families who are a part of the Cecil Convent School community.
+          </p>
+        </div>
+
+        {/* Testimonials Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {reviews.map((item) => (
+            <div 
+              key={item.id} 
+              className={`${item.bgColor} rounded-2xl p-8 shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100 relative`}
+            >
+              {/* Quote Icon */}
+              <div className="absolute top-6 right-6 opacity-20">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor" className="text-gray-900">
+                  <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                </svg>
+              </div>
+
+              {/* 5-Star Rating */}
+              <div className="flex gap-1 mb-6">
+                {[...Array(item.rating)].map((_, i) => (
+                  <svg key={i} className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                ))}
+              </div>
+
+              {/* Review Text */}
+              <p className="text-gray-700 leading-relaxed mb-8 italic">
+                "{item.review}"
+              </p>
+
+              {/* Parent Info */}
+              <div className="flex items-center gap-4 mt-auto">
+                <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center text-xl font-bold text-gray-500">
+                  {item.parentName.charAt(0)}
+                </div>
+                <div>
+                  <h4 className="font-bold text-gray-900">{item.parentName}</h4>
+                  <p className="text-sm text-gray-500">{item.childClass}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+      </div>
+    </section>
+  );
+}

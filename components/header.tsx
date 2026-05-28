@@ -15,8 +15,13 @@ export function Header() {
     { href: '#home', label: 'Home' },
     { href: '#about', label: 'About Us' },
     { href: '#principal', label: "Principal's Message" },
+    { href: '#academic', label: 'Academic' },
+    { href: '#facilities', label: 'Facilities' },
+    { href: '#achievements', label: 'Achievements' },
     { href: '#staff', label: 'Our Staff' },
     { href: '#gallery', label: 'Gallery' },
+    { href: '#students-corner', label: 'Students Corner' },
+    { href: '#admission', label: 'Admission' },
     { href: '#contact', label: 'Contact' },
   ]
 
@@ -65,15 +70,49 @@ export function Header() {
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center gap-6">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="text-blue-900 hover:text-blue-600 font-bold transition-colors text-sm"
-                >
-                  {link.label}
-                </Link>
-              ))}
+              <Link href="#home" className="text-blue-900 hover:text-blue-600 font-bold transition-colors">Home</Link>
+          
+          {/* Dropdown 1: About School */}
+          <div className="relative group">
+            <button className="text-blue-900 hover:text-blue-600 font-bold transition-colors flex items-center gap-1 py-2">
+              About School ▾
+            </button>
+            <div className="absolute left-0 top-full mt-0 w-48 bg-white border border-gray-200 shadow-lg rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col py-2">
+              <Link href="#about" className="px-4 py-2 text-sm text-blue-900 hover:bg-blue-50 hover:text-blue-600 font-medium">About Us</Link>
+              <Link href="#principal" className="px-4 py-2 text-sm text-blue-900 hover:bg-blue-50 hover:text-blue-600 font-medium">Principal's Message</Link>
+              <Link href="#staff" className="px-4 py-2 text-sm text-blue-900 hover:bg-blue-50 hover:text-blue-600 font-medium">Our Staff</Link>
+            </div>
+          </div>
+
+          {/* Dropdown 2: Explore */}
+          <div className="relative group">
+            <button className="text-blue-900 hover:text-blue-600 font-bold transition-colors flex items-center gap-1 py-2">
+              Explore ▾
+            </button>
+            <div className="absolute left-0 top-full mt-0 w-52 bg-white border border-gray-200 shadow-lg rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col py-2">
+              <Link href="/academic" className="px-4 py-2 text-sm text-blue-900 hover:bg-blue-50 hover:text-blue-600 font-medium">Academic</Link>
+              <Link href="/facilities" className="px-4 py-2 text-sm text-blue-900 hover:bg-blue-50 hover:text-blue-600 font-medium">Facilities</Link>
+              <Link href="/achievements" className="px-4 py-2 text-sm text-blue-900 hover:bg-blue-50 hover:text-blue-600 font-medium">Achievements</Link>
+              <Link href="/students-corner" className="px-4 py-2 text-sm text-blue-900 hover:bg-blue-50 hover:text-blue-600 font-medium">Students Corner</Link>
+            </div>
+          </div>
+
+          <Link href="#gallery" className="text-blue-900 hover:text-blue-600 font-bold transition-colors">Gallery</Link>
+          {/* Dropdown 3: Admission */}
+          <div className="relative group">
+            <button className="text-blue-900 hover:text-blue-600 font-bold transition-colors flex items-center gap-1 py-2">
+              Admission ▾
+            </button>
+            <div className="absolute left-0 top-full mt-0 w-56 bg-white border border-gray-200 shadow-lg rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col py-2 z-50">
+              <Link href="/admission-info" className="px-4 py-2 text-sm text-blue-900 hover:bg-blue-50 hover:text-blue-600 font-medium">
+                Admission Information
+              </Link>
+              <Link href="/book-list" className="px-4 py-2 text-sm text-blue-900 hover:bg-blue-50 hover:text-blue-600 font-medium">
+                Book List 2026-2027
+              </Link>
+            </div>
+          </div>
+          <Link href="#contact" className="text-blue-900 hover:text-blue-600 font-bold transition-colors">Contact</Link>
               <Link href="/fee-structure" className="mr-4">
   <button className="bg-white border-2 border-blue-900 text-blue-900 px-5 py-2 rounded-full hover:bg-blue-50 transition duration-300 font-medium hidden md:inline-block">
     Fee Structure
