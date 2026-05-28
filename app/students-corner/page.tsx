@@ -13,7 +13,7 @@ export default function StudentsCornerPage() {
         ></div>
         <div className="relative z-10 text-center px-4">
           <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-4 drop-shadow-lg">
-            Students' Corner
+            Students&apos; Corner
           </h1>
           <p className="text-lg md:text-xl text-purple-100 max-w-2xl mx-auto drop-shadow-md">
             A space dedicated to student leadership, creativity, clubs, and campus life.
@@ -45,7 +45,7 @@ export default function StudentsCornerPage() {
               <p className="text-gray-600 leading-relaxed mb-4">
                 Empowering the leaders of tomorrow. Our Student Council takes an active role in organizing events, voicing student opinions, and maintaining discipline across the campus.
               </p>
-              <button className="text-purple-600 font-semibold hover:text-purple-800 transition">Meet the Council rarr;</button>
+              <button className="text-purple-600 font-semibold hover:text-purple-800 transition">Meet the Council &rarr;</button>
             </div>
           </div>
 
@@ -79,7 +79,7 @@ export default function StudentsCornerPage() {
             <div className="p-8">
               <h3 className="text-2xl font-bold text-purple-900 mb-3">Creative Expressions</h3>
               <p className="text-gray-600 leading-relaxed mb-4">
-                Dive into our annual school magazine "The Cecil Chronicle". Read beautiful poems, insightful articles, and view stunning artwork contributed entirely by our students.
+                Dive into our annual school magazine &quot;The Cecil Chronicle&quot;. Read beautiful poems, insightful articles, and view stunning artwork contributed entirely by our students.
               </p>
               <button className="text-purple-600 font-semibold hover:text-purple-800 transition">Read Latest Issue &rarr;</button>
             </div>
@@ -101,7 +101,7 @@ export default function StudentsCornerPage() {
               </div>
               <div className="bg-white p-4 rounded-lg shadow-sm border border-purple-100">
                 <span className="text-sm font-bold text-purple-600">November 14, 2026</span>
-                <p className="font-semibold text-gray-800 mt-1">Children's Day Grand Fete</p>
+                <p className="font-semibold text-gray-800 mt-1">Children&apos;s Day Grand Fete</p>
               </div>
             </div>
           </div>

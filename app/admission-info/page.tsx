@@ -16,7 +16,7 @@ export default function AdmissionInfoPage() {
             Admission Information
           </h1>
           <p className="text-lg md:text-xl text-blue-100 max-w-2xl mx-auto drop-shadow-md">
-            Your child's journey to excellence begins here. Join the most trusted educational institution in Ambala Cantt.
+            Your child&apos;s journey to excellence begins here. Join the most trusted educational institution in Ambala Cantt.
           </p>
         </div>
       </div>

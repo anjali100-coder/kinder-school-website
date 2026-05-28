@@ -1,114 +1,104 @@
 import React from 'react';
-import Link from 'next/link';
 
 export default function FacilitiesPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       
       {/* Hero Banner Section */}
-      <div className="relative w-full h-[40vh] md:h-[50vh] flex items-center justify-center bg-blue-900">
-        {/* Yeh ek real school library ki HD photo hai */}
+      <div className="relative w-full h-[40vh] md:h-[50vh] flex items-center justify-center bg-yellow-600">
         <div 
-          className="absolute inset-0 bg-cover bg-center opacity-40"
+          className="absolute inset-0 bg-cover bg-center opacity-30"
           style={{ backgroundImage: "url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=2070&auto=format&fit=crop')" }}
         ></div>
         <div className="relative z-10 text-center px-4">
           <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-4 drop-shadow-lg">
-            World-Class Facilities
+            Our Campus Facilities
           </h1>
-          <p className="text-lg md:text-xl text-blue-100 max-w-2xl mx-auto drop-shadow-md">
-            Providing a nurturing environment where young minds can explore, learn, and grow beyond the classroom.
+          <p className="text-lg md:text-xl text-yellow-50 max-w-2xl mx-auto drop-shadow-md">
+            State-of-the-art infrastructure designed to fuel every student&apos;s imagination and growth.
           </p>
         </div>
       </div>
 
-      {/* Main Content Grid */}
+      {/* Main Facilities Grid */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Empowering Education with the Best Infrastructure</h2>
-          <div className="w-24 h-1 bg-blue-600 mx-auto rounded-full"></div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">World-Class Infrastructure</h2>
+          <div className="w-24 h-1 bg-yellow-500 mx-auto rounded-full"></div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
           
-          {/* Facility 1: Smart Classrooms */}
-          <div className="bg-white rounded-2xl shadow-lg overflow-hidden group hover:shadow-xl transition-shadow duration-300">
-            <div className="h-64 overflow-hidden relative">
+          {/* Smart Classrooms */}
+          <div className="bg-white rounded-2xl shadow-md overflow-hidden group border border-gray-100">
+            <div className="h-56 overflow-hidden relative">
               <img 
-                src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?q=80&w=2000&auto=format&fit=crop" 
-                alt="Smart Classrooms" 
+                src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?q=80&w=2070&auto=format&fit=crop" 
+                alt="Smart Classroom" 
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
             </div>
-            <div className="p-8">
-              <h3 className="text-2xl font-bold text-gray-800 mb-3">Digital Smart Classrooms</h3>
-              <p className="text-gray-600 leading-relaxed">
-                Step into the future of learning. Our fully air-conditioned, digitally equipped classrooms transform traditional teaching into an interactive, engaging experience that captures every student's imagination.
+            <div className="p-6">
+              <h3 className="text-2xl font-bold text-gray-800 mb-2">Smart Classrooms</h3>
+              <p className="text-gray-600 text-sm leading-relaxed">
+                Our classrooms are equipped with modern interactive whiteboards and digital projectors to make learning an engaging visual experience.
               </p>
             </div>
           </div>
 
-          {/* Facility 2: Science Labs */}
-          <div className="bg-white rounded-2xl shadow-lg overflow-hidden group hover:shadow-xl transition-shadow duration-300">
-            <div className="h-64 overflow-hidden relative">
+          {/* Advanced Labs */}
+          <div className="bg-white rounded-2xl shadow-md overflow-hidden group border border-gray-100">
+            <div className="h-56 overflow-hidden relative">
               <img 
                 src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=2070&auto=format&fit=crop" 
-                alt="Science Laboratories" 
+                alt="Science Lab" 
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
             </div>
-            <div className="p-8">
-              <h3 className="text-2xl font-bold text-gray-800 mb-3">Advanced Science Laboratories</h3>
-              <p className="text-gray-600 leading-relaxed">
-                Where curiosity meets discovery. Our state-of-the-art Physics, Chemistry, and Biology labs provide hands-on practical knowledge, encouraging students to experiment and innovate safely.
+            <div className="p-6">
+              <h3 className="text-2xl font-bold text-gray-800 mb-2">Advanced Labs</h3>
+              <p className="text-gray-600 text-sm leading-relaxed">
+                Hands-on learning with fully equipped Physics, Chemistry, Biology, and high-tech Computer labs to foster scientific inquiry.
               </p>
             </div>
           </div>
 
-          {/* Facility 3: Sports Complex */}
-          <div className="bg-white rounded-2xl shadow-lg overflow-hidden group hover:shadow-xl transition-shadow duration-300">
-            <div className="h-64 overflow-hidden relative">
+          {/* Sports Complex */}
+          <div className="bg-white rounded-2xl shadow-md overflow-hidden group border border-gray-100">
+            <div className="h-56 overflow-hidden relative">
               <img 
-                src="https://images.unsplash.com/photo-1526676037777-05a232554f77?q=80&w=2070&auto=format&fit=crop" 
+                src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=80&w=2093&auto=format&fit=crop" 
                 alt="Sports Complex" 
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
             </div>
-            <div className="p-8">
-              <h3 className="text-2xl font-bold text-gray-800 mb-3">Expansive Sports Complex</h3>
-              <p className="text-gray-600 leading-relaxed">
-                Physical fitness is as vital as mental growth. With dedicated grounds for cricket, basketball, and a modern indoor sports arena, we build teamwork, discipline, and future champions.
+            <div className="p-6">
+              <h3 className="text-2xl font-bold text-gray-800 mb-2">Sports Complex &amp; Playground</h3>
+              <p className="text-gray-600 text-sm leading-relaxed">
+                Extensive sports facilities including a football ground, cricket nets, basketball court, and indoor games to ensure physical fitness.
               </p>
             </div>
           </div>
 
-          {/* Facility 4: Library */}
-          <div className="bg-white rounded-2xl shadow-lg overflow-hidden group hover:shadow-xl transition-shadow duration-300">
-            <div className="h-64 overflow-hidden relative">
+          {/* Library */}
+          <div className="bg-white rounded-2xl shadow-md overflow-hidden group border border-gray-100">
+            <div className="h-56 overflow-hidden relative">
               <img 
-                src="https://images.unsplash.com/photo-1568667256549-094345857637?q=80&w=2030&auto=format&fit=crop" 
+                src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=2140&auto=format&fit=crop" 
                 alt="Library" 
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
             </div>
-            <div className="p-8">
-              <h3 className="text-2xl font-bold text-gray-800 mb-3">Resource-Rich Library</h3>
-              <p className="text-gray-600 leading-relaxed">
-                A sanctuary of knowledge. Our library houses thousands of books, international journals, and digital resources, offering a peaceful environment that fosters a lifelong love for reading.
+            <div className="p-6">
+              <h3 className="text-2xl font-bold text-gray-800 mb-2">Resourceful Library</h3>
+              <p className="text-gray-600 text-sm leading-relaxed">
+                A peaceful sanctuary containing thousands of books, journals, and digital reference materials to expand young minds.
               </p>
             </div>
           </div>
 
         </div>
-
-        {/* Call to Action */}
-        <div className="mt-16 text-center">
-          <Link href="#contact" className="inline-block bg-blue-600 text-white font-bold px-8 py-4 rounded-full shadow-lg hover:bg-blue-700 hover:shadow-xl transition-all duration-300">
-            Visit Our Campus Today
-          </Link>
-        </div>
-
       </div>
     </div>
   );
