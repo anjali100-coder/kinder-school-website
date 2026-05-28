@@ -11,19 +11,26 @@ export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isAdmissionModalOpen, setIsAdmissionModalOpen] = useState(false)
 
-  const navLinks = [
-    { href: '#home', label: 'Home' },
-    { href: '#about', label: 'About Us' },
-    { href: '#principal', label: "Principal's Message" },
-    { href: '#academic', label: 'Academic' },
-    { href: '#facilities', label: 'Facilities' },
-    { href: '#achievements', label: 'Achievements' },
-    { href: '#staff', label: 'Our Staff' },
-    { href: '#gallery', label: 'Gallery' },
-    { href: '#students-corner', label: 'Students Corner' },
-    { href: '#admission', label: 'Admission' },
-    { href: '#contact', label: 'Contact' },
-  ]
+const navLinks = [
+  { href: '#home', label: 'Home' },
+  { href: '#about', label: 'About Us' },
+  { href: '#principal', label: "Principal's Message" },
+  { 
+    label: 'Academic',
+    subLinks: [
+      { href: '/admission', label: 'Admission Info' },
+      { href: '/fee-structure', label: 'Fee Structure' },
+      { href: '/book-list', label: 'Book List' }
+    ]
+  },
+  { href: '#facilities', label: 'Facilities' },
+  { href: '#achievements', label: 'Achievements' },
+  { href: '#staff', label: 'Our Staff' },
+  { href: '#gallery', label: 'Gallery' },
+  { href: '#students-corner', label: 'Students Corner' },
+  { href: '#admission', label: 'Admission' },
+  { href: '#contact', label: 'Contact' }
+];
 
   return (
     <>
@@ -140,23 +147,30 @@ export function Header() {
           {isMenuOpen && (
             <div className="lg:hidden mt-4 pb-4 border-t-3 border-yellow-300 pt-4">
               <div className="flex flex-col gap-2">
-                {navLinks.map((link) => (
+                {navLinks.map((link: any) => (
   <div key={link.label} className="w-full">
-    {/* Agar link mein dropdown/subLinks hain */}
-    {(link.subLinks || link.dropdownItems) ? (
-      <div className="flex flex-col">
-        <span className="text-blue-900 font-bold py-3 px-4 border-b border-blue-100">{link.label} ▼</span>
-        <div className="flex flex-col pl-6 bg-blue-50/50 py-2">
-          {(link.subLinks || link.dropdownItems).map((subLink) => (
-            <Link
-              key={subLink.label}
-              href={subLink.href}
-              className="text-blue-800 hover:text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors block"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              {subLink.label}
-            </Link>
-          ))}
+    
+    {(link.subLinks || link.dropdownItems).map((subLink: any) => (
+<Link
+key={subLink.label}
+href={subLink.href}
+className="text-blue-800 hover:text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors block"
+onClick={() => setIsMenuOpen(false)}
+>
+{subLink.label}
+
+))}
+
+
+) : (
+<Link
+href={link.href}
+className="block text-blue-900 hover:text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-600 transition-colors"
+onClick={() => setIsMenuOpen(false)}
+>
+{link.label}
+
+)}
         </div>
       </div>
     ) : (
