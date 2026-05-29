@@ -12,24 +12,25 @@ export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isAdmissionModalOpen, setIsAdmissionModalOpen] = useState(false)
 
+  // YAHAN MAINE AAPKE SAARE NAYE PAGES KE LINKS SAHI KAR DIYE HAIN
   const navLinks = [
-    { href: '#home', label: 'Home' },
-    { href: '#about', label: 'About Us' },
-    { href: '#principal', label: "Principal's Message" },
+    { href: '/', label: 'Home' },
+    { href: '/#about', label: 'About Us' },
+    { href: '/#principal', label: "Principal's Message" },
     { 
       label: 'Academic',
       subLinks: [
-        { href: '/admission', label: 'Admission Info' },
+        { href: '/admission-info', label: 'Admission Info' },
         { href: '/fee-structure', label: 'Fee Structure' },
         { href: '/book-list', label: 'Book List' }
       ]
     },
-    { href: '#facilities', label: 'Facilities' },
-    { href: '#achievements', label: 'Achievements' },
-    { href: '#staff', label: 'Our Staff' },
-    { href: '#gallery', label: 'Gallery' },
-    { href: '#students-corner', label: 'Students Corner' },
-    { href: '#contact', label: 'Contact' }
+    { href: '/facilities', label: 'Facilities' },
+    { href: '/#achievements', label: 'Achievements' },
+    { href: '/#staff', label: 'Our Staff' },
+    { href: '/#gallery', label: 'Gallery' },
+    { href: '/students-corner', label: 'Students Corner' },
+    { href: '/#contact', label: 'Contact' }
   ];
 
   return (
@@ -46,22 +47,22 @@ export function Header() {
           <nav className="hidden lg:flex items-center gap-6">
             {navLinks.map((link: any, index: number) => (
               <div key={index} className="relative group">
-                {link.subLinks ? (
+                {(link.subLinks || link.dropdownItems) ? (
                   <div className="flex items-center gap-1 cursor-pointer text-blue-900 font-semibold hover:text-blue-600">
                     {link.label}
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
                     <div className="absolute top-full left-0 mt-2 w-48 bg-white shadow-lg rounded-md overflow-hidden hidden group-hover:block">
-                      {link.subLinks.map((subLink: any, subIndex: number) => (
-                        <Link key={subIndex} href={subLink.href} className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-900">
+                      {(link.subLinks || link.dropdownItems).map((subLink: any, subIndex: number) => (
+                        <Link key={subIndex} href={subLink.href || '#'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-900">
                           {subLink.label}
                         </Link>
                       ))}
                     </div>
                   </div>
                 ) : (
-                  <Link href={link.href} className="text-blue-900 font-semibold hover:text-blue-600 transition-colors">
+                  <Link href={link.href || '#'} className="text-blue-900 font-semibold hover:text-blue-600 transition-colors">
                     {link.label}
                   </Link>
                 )}
@@ -85,13 +86,13 @@ export function Header() {
             <div className="flex flex-col gap-2">
               {navLinks.map((link: any, index: number) => (
                 <div key={index} className="w-full">
-                  {link.subLinks ? (
+                  {(link.subLinks || link.dropdownItems) ? (
                     <div className="flex flex-col">
-                      <span className="text-blue-900 font-bold py-3 px-4 border-b border-blue-100">
-                        {link.label}
+                      <span className="text-blue-900 font-bold py-3 px-4 border-b border-blue-100 flex items-center justify-between">
+                        {link.label} ▼
                       </span>
                       <div className="flex flex-col pl-6 bg-blue-50/50 py-2">
-                        {link.subLinks.map((subLink: any, subIndex: number) => (
+                        {(link.subLinks || link.dropdownItems).map((subLink: any, subIndex: number) => (
                           <Link
                             key={subIndex}
                             href={subLink.href || '#'}
