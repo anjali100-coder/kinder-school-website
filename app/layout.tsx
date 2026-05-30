@@ -1,32 +1,25 @@
-import type { Metadata } from 'next'
-import { Poppins } from 'next/font/google'
-import { Analytics } from '@vercel/analytics/next'
-import FloatingContact from '@/components/floating-contact';
 import './globals.css'
+import { Header } from '@/components/header'
+import { Footer } from '@/components/footer'
 
-const poppins = Poppins({ 
-  subsets: ['latin'],
-  variable: '--font-poppins',
-  weight: ['300', '400', '500', '600', '700', '800']
-})
-
-export const metadata: Metadata = {
-  title: 'Cecil Convent School Junior Playway | Ambala Cantt',
-  description: 'Building a strong foundation for your child. Cecil Convent School Junior Playway offers quality early education in Ambala Cantt with nurturing environment and experienced teachers.',
-  keywords: ['kindergarten', 'playway', 'preschool', 'Ambala Cantt', 'Cecil Convent', 'early education'],
+export const metadata = {
+  title: 'Cecil Convent School',
+  description: 'Where Little Dreams Begin to Bloom',
 }
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode
-}>) {
+}) {
   return (
-    <html lang="en" className="bg-background">
-      <body className={`${poppins.className} font-sans antialiased`}>
-        {children}
-        <FloatingContact/>
-        {process.env.NODE_ENV === 'production' && <Analytics />}
+    <html lang="en">
+      <body className="flex flex-col min-h-screen">
+        <Header />
+        <main className="flex-grow">
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
   )
