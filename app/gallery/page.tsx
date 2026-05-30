@@ -8,10 +8,10 @@ export default function Gallery() {
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           
-          {/* Photo 1 */}
+          {/* Photo 1 - School Campus (NEW LINK) */}
           <div className="bg-white border rounded-2xl overflow-hidden shadow-lg">
             <img 
-              src="https://images.unsplash.com/photo-1542736667-069968b1d418?auto=format&fit=crop&w=800&q=80" 
+              src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=800&q=80" 
               alt="School Campus" 
               className="w-full h-72 object-cover" 
             />
@@ -20,7 +20,7 @@ export default function Gallery() {
             </div>
           </div>
 
-          {/* Photo 2 */}
+          {/* Photo 2 - Art & Craft (ALREADY WORKING) */}
           <div className="bg-white border rounded-2xl overflow-hidden shadow-lg">
             <img 
               src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=800&q=80" 
@@ -32,10 +32,10 @@ export default function Gallery() {
             </div>
           </div>
 
-          {/* Photo 3 */}
+          {/* Photo 3 - Sports Day (NEW LINK) */}
           <div className="bg-white border rounded-2xl overflow-hidden shadow-lg">
             <img 
-              src="https://images.unsplash.com/photo-1502086223501-7d6ecd7a8da7?auto=format&fit=crop&w=800&q=80" 
+              src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=800&q=80" 
               alt="Sports Day" 
               className="w-full h-72 object-cover" 
             />
