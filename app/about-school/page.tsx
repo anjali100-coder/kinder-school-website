@@ -1,12 +1,8 @@
 import React from 'react';
-import { Header } from '@/components/header';
-import { Footer } from '@/components/footer';
 
 export default function AboutSchool() {
   return (
     <div className="min-h-screen bg-white">
-      <Header />
-      
       {/* Hero Section */}
       <div className="relative py-24 bg-blue-900 text-white text-center">
         <h1 className="text-5xl font-extrabold mb-4">About Our School</h1>
@@ -38,8 +34,6 @@ export default function AboutSchool() {
           </div>
         </section>
       </main>
-
-      <Footer />
     </div>
   );
 }
