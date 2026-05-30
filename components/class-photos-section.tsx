@@ -3,7 +3,7 @@ import React from 'react';
 const classPhotos = [
   {
     id: 1,
-    src: "https://images.unsplash.com/photo-1542736667-069968b1d418?auto=format&fit=crop&w=800&q=80",
+    src: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=800&q=80",
     title: "Annual Day Celebration",
     description: "Children performed dances and skits"
   },
@@ -15,7 +15,7 @@ const classPhotos = [
   },
   {
     id: 3,
-    src: "https://images.unsplash.com/photo-1502086223501-7d6ecd7a8da7?auto=format&fit=crop&w=800&q=80",
+    src: "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=800&q=80",
     title: "Sports Day Fun",
     description: "Running, jumping, and teamwork"
   }
@@ -27,7 +27,7 @@ export function ClassPhotosSection() {
       <div className="max-w-7xl mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {classPhotos.map((photo) => (
-            <div key={photo.id} className="border rounded-2xl overflow-hidden shadow-lg bg-white">
+            <div key={photo.id} className="border rounded-2xl overflow-hidden shadow-lg bg-white hover:shadow-xl transition-shadow">
               <img 
                 src={photo.src} 
                 alt={photo.title} 
