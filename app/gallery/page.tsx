@@ -8,10 +8,10 @@ export default function Gallery() {
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           
-          {/* Photo 1 - School Campus (NEW LINK) */}
+          {/* Photo 1 - School Campus (EKDUM NAYA LINK) */}
           <div className="bg-white border rounded-2xl overflow-hidden shadow-lg">
             <img 
-              src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=800&q=80" 
+              src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=800&q=80" 
               alt="School Campus" 
               className="w-full h-72 object-cover" 
             />
@@ -20,7 +20,7 @@ export default function Gallery() {
             </div>
           </div>
 
-          {/* Photo 2 - Art & Craft (ALREADY WORKING) */}
+          {/* Photo 2 - Art & Craft (WORKING) */}
           <div className="bg-white border rounded-2xl overflow-hidden shadow-lg">
             <img 
               src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=800&q=80" 
@@ -32,7 +32,7 @@ export default function Gallery() {
             </div>
           </div>
 
-          {/* Photo 3 - Sports Day (NEW LINK) */}
+          {/* Photo 3 - Sports Day (WORKING) */}
           <div className="bg-white border rounded-2xl overflow-hidden shadow-lg">
             <img 
               src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=800&q=80" 
