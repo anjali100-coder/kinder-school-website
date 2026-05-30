@@ -3,7 +3,6 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import { Menu, X, Phone, Mail, MapPin, ChevronDown } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { AdmissionModal } from './admission-modal'
@@ -12,11 +11,19 @@ export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isAdmissionModalOpen, setIsAdmissionModalOpen] = useState(false)
 
-  // EXACTLY YOUR LINKS AS PER THE PHOTO
+  // EXACTLY AS PER YOUR PHOTOS
   const navLinks = [
     { href: '/', label: 'Home' },
-    { href: '/#about', label: 'About School' },
-    { href: '/#explore', label: 'Explore' },
+    { href: '/about-school', label: 'About School' },
+    { 
+      label: 'Explore',
+      subLinks: [
+        { href: '/academic', label: 'Academic' },
+        { href: '/facilities', label: 'Facilities' },
+        { href: '/achievements', label: 'Achievements' },
+        { href: '/students-corner', label: 'Students Corner' }
+      ]
+    },
     { href: '/#gallery', label: 'Gallery' },
     { 
       label: 'Admission',
@@ -85,14 +92,14 @@ export function Header() {
                   ) : (
                     <Link href={link.href || '#'} className="flex flex-col items-center gap-1 text-[#243bb5] font-bold text-[13px] hover:text-[#f07b46] transition-colors">
                       {link.label}
-                      <div className="w-1 h-1 bg-gray-300 rounded-full group-hover:bg-[#f07b46]"></div>
+                      <div className="w-1 h-1 bg-transparent rounded-full group-hover:bg-[#f07b46]"></div>
                     </Link>
                   )}
                 </div>
               ))}
             </nav>
 
-            {/* Right Buttons (Fee Structure & Enroll Now) */}
+            {/* Right Buttons */}
             <div className="hidden xl:flex items-center gap-3">
                <Link href="/fee-structure">
                  <Button variant="outline" className="border-gray-300 text-gray-700 hover:bg-gray-50 rounded-full font-semibold px-5 h-9 text-xs">
