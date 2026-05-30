@@ -39,13 +39,15 @@ const classPhotos = [
     title: 'Annual Events',
     description: 'Special occasions and festive celebrations at school',
   },
+  
+
   {
     id: 6,
-    src: '/images/gallery2.jpg',
+    src: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=800&auto=format&fit=crop",
     alt: 'Creative Workshop',
     title: 'Creative Activities',
     description: 'Art, craft, and creative expression opportunities',
-  },
+  }
 ]
 
 export function ClassPhotosSection() {

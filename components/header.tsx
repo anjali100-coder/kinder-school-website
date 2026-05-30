@@ -11,7 +11,6 @@ export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isAdmissionModalOpen, setIsAdmissionModalOpen] = useState(false)
 
-  // EXACTLY AS PER YOUR PHOTOS
   const navLinks = [
     { href: '/', label: 'Home' },
     { href: '/about-school', label: 'About School' },
@@ -24,7 +23,7 @@ export function Header() {
         { href: '/students-corner', label: 'Students Corner' }
       ]
     },
-    { href: '/#gallery', label: 'Gallery' },
+    { href: '/gallery', label: 'Gallery' },
     { 
       label: 'Admission',
       subLinks: [
@@ -32,7 +31,7 @@ export function Header() {
         { href: '/book-list', label: 'Book List 2026-2027' }
       ]
     },
-    { href: '/#contact', label: 'Contact' }
+    { href: '/contact', label: 'Contact' }
   ];
 
   return (
@@ -60,7 +59,7 @@ export function Header() {
         </div>
 
         {/* MAIN NAVIGATION BAR */}
-        <div className="max-w-7xl mx-auto px-4 py-3 sm:py-4">
+        <div className="max-w-7xl mx-auto px-4 py-2 sm:py-3">
           <div className="flex justify-between items-center">
             
             {/* Logo Area */}
@@ -72,23 +71,27 @@ export function Header() {
             </Link>
 
             {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-start gap-8">
+            <nav className="hidden lg:flex items-center gap-8">
               {navLinks.map((link: any, index: number) => (
-                <div key={index} className="relative group">
+                <div key={index} className="relative group py-4"> {/* py-4 banata hai bada invisible hover area */}
                   {link.subLinks ? (
-                    <div className="flex flex-col items-center gap-1 cursor-pointer text-[#243bb5] font-bold text-[13px] hover:text-[#f07b46] transition-colors">
-                      {link.label}
-                      <ChevronDown className="w-4 h-4 text-gray-400 group-hover:text-[#f07b46]" />
-                      
-                      {/* Dropdown Menu */}
-                      <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-56 bg-white shadow-xl rounded-2xl border border-gray-100 overflow-hidden hidden group-hover:block transition-all z-50">
-                        {link.subLinks.map((subLink: any, subIndex: number) => (
-                          <Link key={subIndex} href={subLink.href || '#'} className="block px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-orange-50 hover:text-[#f07b46] border-b border-gray-50 last:border-0 text-center">
-                            {subLink.label}
-                          </Link>
-                        ))}
+                    <>
+                      <div className="flex items-center gap-1 cursor-pointer text-[#243bb5] font-bold text-[13px] hover:text-[#f07b46] transition-colors">
+                        {link.label}
+                        <ChevronDown className="w-4 h-4 text-gray-400 group-hover:text-[#f07b46] transition-transform duration-300 group-hover:rotate-180" />
                       </div>
-                    </div>
+                      
+                      {/* Fixed Dropdown Menu - No gap, smooth fade in */}
+                      <div className="absolute top-[100%] left-1/2 -translate-x-1/2 pt-1 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                        <div className="bg-white shadow-xl rounded-2xl border border-gray-100 overflow-hidden">
+                          {link.subLinks.map((subLink: any, subIndex: number) => (
+                            <Link key={subIndex} href={subLink.href || '#'} className="block px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-orange-50 hover:text-[#f07b46] border-b border-gray-50 last:border-0 text-center transition-colors">
+                              {subLink.label}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    </>
                   ) : (
                     <Link href={link.href || '#'} className="flex flex-col items-center gap-1 text-[#243bb5] font-bold text-[13px] hover:text-[#f07b46] transition-colors">
                       {link.label}
