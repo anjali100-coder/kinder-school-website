@@ -74,7 +74,7 @@ export function Header() {
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center gap-8">
               {navLinks.map((link: any, index: number) => (
-                <div key={index} className="relative group py-4"> 
+                <div key={index} className="relative group py-4 flex items-center"> 
                   {link.subLinks ? (
                     <>
                       <div className="flex items-center gap-1 cursor-pointer text-[#243bb5] font-bold text-[13px] hover:text-[#f07b46] transition-colors">
