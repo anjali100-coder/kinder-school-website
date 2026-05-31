@@ -1,6 +1,7 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
+import Link from 'next/link'
 import { Sparkles, Heart } from 'lucide-react'
 import { ImageUploadPlaceholder } from '@/components/image-upload-placeholder'
 
@@ -37,21 +38,30 @@ export function HeroSection() {
               At Cecil Convent School Junior Playway, we nurture young minds with love, creativity, and joy. Building a strong foundation for your child&apos;s bright future in Ambala Cantt.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-2">
-              <Button 
-                size="lg" 
-                className="bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 rounded-full font-bold text-base md:text-lg px-8 shadow-lg hover:shadow-xl transition-all h-12 md:h-14"
-              >
-                Start Your Journey
-              </Button>
-              <Button 
-                size="lg" 
-                variant="outline" 
-                className="border-3 border-yellow-400 text-yellow-600 hover:bg-yellow-50 font-bold text-base md:text-lg px-8 rounded-full transition-all h-12 md:h-14"
-              >
-                Learn More
-              </Button>
-            </div>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+  
+  {/* BUTTON 1: Start Your Journey -> Ye /journey page par lekar jayega */}
+  <Link href="/journey">
+    <Button
+      size="lg"
+      className="bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:opacity-90"
+    >
+      Start Your Journey
+    </Button>
+  </Link>
+
+  {/* BUTTON 2: Learn More -> Hover karne par ab blur nahi hoga */}
+  <Link href="/about-school">
+    <Button
+      size="lg"
+      variant="outline"
+      className="border-2 border-yellow-400 text-yellow-600 hover:bg-yellow-400 hover:text-white transition-colors"
+    >
+      Learn More
+    </Button>
+  </Link>
+  
+</div>
 
             {/* Stats */}
             <div className="grid grid-cols-3 gap-4 md:gap-6 mt-12 pt-8 border-t-2 border-yellow-200">
