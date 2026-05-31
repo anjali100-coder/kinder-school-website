@@ -94,10 +94,9 @@ export function Header() {
                       </div>
                     </>
                   ) : (
-                    <Link href={link.href || '#'} className="flex flex-col items-center gap-1 text-[#243bb5] font-bold text-[13px] hover:text-[#f07b46] transition-colors">
-                      {link.label}
-                      <div className="w-1 h-1 bg-transparent rounded-full group-hover:bg-[#f07b46]"></div>
-                    </Link>
+                    <Link href={link.href || '#'} className="flex items-center text-[#243bb5] font-bold text-[13px] hover:text-[#f07b46]">
+    {link.label}
+</Link>
                   )}
                 </div>
               ))}
