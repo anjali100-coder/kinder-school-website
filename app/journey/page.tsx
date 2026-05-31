@@ -18,34 +18,37 @@ export default function JourneyPage() {
         </p>
       </div>
 
-      {/* Aapki Photos Ki Gallery (Public folder se direct link) */}
+      {/* 6 Photos Ki Badi Gallery */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-12">
         
-        {/* Photo 1: main.jpg */}
+        {/* Photo 1 */}
         <div className="rounded-2xl overflow-hidden shadow-xl border-4 border-white">
-          <img 
-            src="/main.jpg" 
-            alt="School Activity 1" 
-            className="w-full h-72 object-cover hover:scale-110 transition-transform duration-500" 
-          />
+          <img src="/pic11.jpg" alt="Activity 1" className="w-full h-72 object-cover hover:scale-110 transition-transform duration-500" />
         </div>
 
-        {/* Photo 2: placeholder.jpg */}
+        {/* Photo 2 */}
         <div className="rounded-2xl overflow-hidden shadow-xl border-4 border-white">
-          <img 
-            src="/placeholder.jpg" 
-            alt="School Activity 2" 
-            className="w-full h-72 object-cover hover:scale-110 transition-transform duration-500" 
-          />
+          <img src="/pic12.jpg" alt="Activity 2" className="w-full h-72 object-cover hover:scale-110 transition-transform duration-500" />
         </div>
 
-        {/* Photo 3: placeholder-user.jpg */}
+        {/* Photo 3 */}
         <div className="rounded-2xl overflow-hidden shadow-xl border-4 border-white">
-          <img 
-            src="/placeholder-user.jpg" 
-            alt="School Activity 3" 
-            className="w-full h-72 object-cover hover:scale-110 transition-transform duration-500" 
-          />
+          <img src="/pic13.jpg" alt="Activity 3" className="w-full h-72 object-cover hover:scale-110 transition-transform duration-500" />
+        </div>
+
+        {/* Photo 4 */}
+        <div className="rounded-2xl overflow-hidden shadow-xl border-4 border-white">
+          <img src="/pic14.jpg" alt="Activity 4" className="w-full h-72 object-cover hover:scale-110 transition-transform duration-500" />
+        </div>
+
+        {/* Photo 5 */}
+        <div className="rounded-2xl overflow-hidden shadow-xl border-4 border-white">
+          <img src="/pic15.jpg" alt="Activity 5" className="w-full h-72 object-cover hover:scale-110 transition-transform duration-500" />
+        </div>
+
+        {/* Photo 6 */}
+        <div className="rounded-2xl overflow-hidden shadow-xl border-4 border-white">
+          <img src="/pic16.jpg" alt="Activity 6" className="w-full h-72 object-cover hover:scale-110 transition-transform duration-500" />
         </div>
 
       </div>
@@ -53,7 +56,7 @@ export default function JourneyPage() {
       {/* Wapas Home Page Par Jane Ka Button */}
       <div className="flex justify-center mt-10">
         <Link href="/">
-          <Button className="bg-[#243bb5] hover:bg-blue-800 text-white px-8 py-6 rounded-full text-lg font-semibold">
+          <Button className="bg-[#243bb5] hover:bg-blue-800 text-white px-8 py-6 rounded-full text-lg font-semibold transition-all">
             Back to Home
           </Button>
         </Link>
