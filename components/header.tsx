@@ -64,6 +64,7 @@ export function Header() {
             
             {/* Logo Area */}
             <Link href="/" className="flex items-center gap-3">
+            <img src="/logo.png" alt="School Logo" className="w-12 h-12 object-contain" />
               <div className="flex flex-col">
                  <span className="text-sm sm:text-lg lg:text-xl font-extrabold text-[#243bb5] leading-tight">Cecil Convent<br/>School</span>
                  <span className="text-[10px] sm:text-xs text-gray-500 font-semibold tracking-wide">Junior Playway</span>
@@ -73,12 +74,12 @@ export function Header() {
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center gap-8">
               {navLinks.map((link: any, index: number) => (
-                <div key={index} className="relative group py-4"> {/* py-4 banata hai bada invisible hover area */}
+                <div key={index} className="relative group py-4"> 
                   {link.subLinks ? (
                     <>
                       <div className="flex items-center gap-1 cursor-pointer text-[#243bb5] font-bold text-[13px] hover:text-[#f07b46] transition-colors">
                         {link.label}
-                        <ChevronDown className="w-4 h-4 text-gray-400 group-hover:text-[#f07b46] transition-transform duration-300 group-hover:rotate-180" />
+                        <ChevronDown className="w-4 h-4 mt-[2px] text-gray-400 group-hover:text-[#f07b46] transition-transform duration-300 group-hover:rotate-180" />
                       </div>
                       
                       {/* Fixed Dropdown Menu - No gap, smooth fade in */}
