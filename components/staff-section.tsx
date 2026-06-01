@@ -10,6 +10,7 @@ const staffMembers = [
     qualification: 'B.Ed., NTT',
     experience: '12 Years',
     specialty: 'Early Literacy',
+    image: '/tec1.jfif',
   },
   {
     id: 2,
@@ -18,6 +19,7 @@ const staffMembers = [
     qualification: 'M.A., NTT',
     experience: '8 Years',
     specialty: 'Creative Arts',
+    image: '/tec2.jfif',
   },
   {
     id: 3,
@@ -26,6 +28,7 @@ const staffMembers = [
     qualification: 'B.Ed.',
     experience: '10 Years',
     specialty: 'Numeracy Skills',
+    image: '/tec3.jfif',
   },
   {
     id: 4,
@@ -34,6 +37,7 @@ const staffMembers = [
     qualification: 'B.A., NTT',
     experience: '6 Years',
     specialty: 'Music & Movement',
+    image: '/tec4.jfif',
   },
   {
     id: 5,
@@ -42,6 +46,7 @@ const staffMembers = [
     qualification: 'NTT Diploma',
     experience: '5 Years',
     specialty: 'Child Care',
+    image: '/tec5.jfif',
   },
 ]
 
@@ -62,7 +67,7 @@ export function StaffSection() {
           </p>
         </div>
 
-        {/* Staff Grid */}
+        
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
           {staffMembers.map((staff) => (
             <Card 
@@ -73,11 +78,7 @@ export function StaffSection() {
                 {/* Photo - Circular Frame */}
                 <div className="relative mx-auto mb-4">
                   <div className="w-28 h-28 mx-auto rounded-full overflow-hidden border-4 border-yellow-300 bg-gradient-to-br from-blue-100 to-yellow-100 group-hover:border-blue-400 transition-colors flex-shrink-0 shadow-lg">
-                    <img 
-  src="https://img.freepik.com/premium-photo/beautiful-indian-teacher_981168-2922.jpg?semt=ais_hybrid&w=740&q=80" 
-  alt="Staff Member" 
-  className="w-full h-full object-cover rounded-full" 
-/>
+                    
                   </div>
                   {/* Decorative dots */}
                   <div className="absolute -top-1 -right-1 w-4 h-4 bg-blue-600 rounded-full shadow-md"></div>
