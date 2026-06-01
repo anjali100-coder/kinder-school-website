@@ -2,17 +2,17 @@ import React from 'react';
 
 export function GallerySection() {
   const images = [
-    { 
-      src: "/campus.jpg", 
-      title: "School Campus" 
+    {
+      src: "/campus.jpg",
+      title: "School Campus"
     },
-    { 
-      src: "/classroom.jpg", 
-      title: "Classroom Fun" 
+    {
+      src: "/classroom.jpg",
+      title: "Classroom Fun"
     },
-    { 
-      src: "/sports.jfif", 
-      title: "Sports Day" 
+    {
+      src: "/sports.jfif",
+      title: "Sports Day"
     }
   ];
 
@@ -23,14 +23,14 @@ export function GallerySection() {
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {images.map((img, index) => (
-            <div key={index} className="bg-white border rounded-2xl overflow-hidden shadow-lg">
+            <div key={index} className="bg-white border rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-all">
               <img 
                 src={img.src} 
                 alt={img.title} 
-                className="w-full h-72 object-cover" 
+                className="w-full h-72 object-cover"
               />
-              <div className="p-4">
-                <h3 className="font-bold text-center text-xl text-blue-900">{img.title}</h3>
+              <div className="p-4 text-center">
+                <h3 className="text-xl font-semibold text-gray-800">{img.title}</h3>
               </div>
             </div>
           ))}
