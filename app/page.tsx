@@ -7,7 +7,7 @@ import { GallerySection } from '@/components/gallery-section';
 import { ClassPhotosSection } from '@/components/class-photos-section';
 import Testimonials from '@/components/testimonials'; // <--- Testimonials Import
 import SchoolMap from '@/components/school-map'; // <--- Map Import Kiya
-import ScrollReveal from '@/components/scroll-reveal'; // <--- Animation Import Kiya
+import ScrollReveal from '@/components/scroll-reveal'; // 
 
 
 export default function Home() {
@@ -15,10 +15,10 @@ export default function Home() {
     <div className="min-h-screen">
       
       <main>
-        {/* Hero page pehle se dikhna chahiye, isliye ispe animation nahi lagayi */}
+        
         <HeroSection />
 
-        {/* Ab baaki saare sections smooth animation ke sath khulenge */}
+        
         <ScrollReveal>
           <AboutSection />
         </ScrollReveal>

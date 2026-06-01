@@ -112,7 +112,7 @@ export function StaffSection() {
             <p className="text-gray-700 mb-4 font-semibold">
               We&apos;re always looking for passionate educators who love working with children.
             </p>
-<a href="/contact" className="inline-block bg-[#243bb5] hover:bg-blue-800 text-white px-8 py-4 rounded-full text-lg font-bold transition-all shadow-lg hover:shadow-xl mt-4">
+<a href="/careers" className="inline-block bg-[#243bb5] hover:bg-blue-800 text-white px-8 py-4 rounded-full text-lg font-bold transition-all shadow-lg hover:shadow-xl mt-4">
   Contact Us
 </a>
           </div>
