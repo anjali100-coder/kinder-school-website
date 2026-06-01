@@ -78,7 +78,7 @@ export function StaffSection() {
                 {/* Photo - Circular Frame */}
                 <div className="relative mx-auto mb-4">
                   <div className="w-28 h-28 mx-auto rounded-full overflow-hidden border-4 border-yellow-300 bg-gradient-to-br from-blue-100 to-yellow-100 group-hover:border-blue-400 transition-colors flex-shrink-0 shadow-lg">
-                    
+      <img src={staff.image} alt={staff.name} className="w-full h-full object-cover" />              
                   </div>
                   {/* Decorative dots */}
                   <div className="absolute -top-1 -right-1 w-4 h-4 bg-blue-600 rounded-full shadow-md"></div>
