@@ -13,16 +13,19 @@ export function Footer() {
             <p className="text-blue-200 text-sm">Subscribe to receive updates about admissions, events, and activities.</p>
           </div>
           <div className="md:w-1/2 w-full flex">
-            <input 
-              type="email" 
-              placeholder="Enter your email" 
-              className="w-full px-4 py-3 rounded-l-full outline-none text-gray-900 focus:ring-2 focus:ring-yellow-500"
-            />
-            <button className="bg-yellow-500 hover:bg-yellow-600 text-blue-900 font-bold px-6 py-3 rounded-r-full transition-colors whitespace-nowrap">
-              Subscribe
-            </button>
-          </div>
-        </div>
+  <input
+    type="email"
+    placeholder="Enter your email"
+    className="w-full px-4 py-3 bg-transparent border-2 border-gray-400 text-white placeholder-gray-300 rounded-l-lg focus:outline-none focus:border-yellow-400 focus:bg-white/10 transition-all"
+    required
+  />
+  <button
+    type="submit"
+    className="px-6 py-3 bg-yellow-500 hover:bg-yellow-600 text-blue-900 font-bold rounded-r-lg transition-all"
+  >
+    Subscribe
+  </button>
+</div>
 
         {/* 2. MAIN FOOTER LINKS */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12 border-b border-blue-800 pb-12">
