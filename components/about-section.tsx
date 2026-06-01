@@ -10,7 +10,7 @@ export function AboutSection() {
           <div className="relative h-[400px] md:h-[500px] rounded-3xl overflow-hidden shadow-2xl border-4 border-gray-50 group">
             {/* Jab aapke paas school ki asli photo aaye, toh aap usko public folder mein daal kar yahan src="/aapki-photo.jpg" likh sakte hain */}
             <img 
-              src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=1000&auto=format&fit=crop" 
+              src="/pic13.jpg" 
               alt="Cecil Convent School Playway" 
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
@@ -19,7 +19,7 @@ export function AboutSection() {
             <div className="absolute -top-6 -left-6 w-40 h-40 bg-[#243bb5] rounded-full opacity-30 blur-3xl"></div>
           </div>
 
-          {/* Text Side - Exactly as per your screenshot */}
+          
           <div>
             <h2 className="text-3xl md:text-4xl font-extrabold text-[#243bb5] mb-6 leading-tight">
               Where Every Child's Journey Begins <br/> <span className="text-[#f07b46]">with Joy</span>
