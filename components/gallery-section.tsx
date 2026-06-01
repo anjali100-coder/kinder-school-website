@@ -3,15 +3,15 @@ import React from 'react';
 export function GallerySection() {
   const images = [
     { 
-      src: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=800&q=80", 
+      src: "/campus.jpg", 
       title: "School Campus" 
     },
     { 
-      src: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=800&q=80", 
+      src: "/classroom.jpg", 
       title: "Classroom Fun" 
     },
     { 
-      src: "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=800&q=80", 
+      src: "/sports.jfif", 
       title: "Sports Day" 
     }
   ];
