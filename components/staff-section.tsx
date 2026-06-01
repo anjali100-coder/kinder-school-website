@@ -46,7 +46,7 @@ const staffMembers = [
     qualification: 'NTT Diploma',
     experience: '5 Years',
     specialty: 'Child Care',
-    image: '/tec5.jfif',
+    image: '/tes5.jfif',
   },
 ]
 
@@ -112,12 +112,9 @@ export function StaffSection() {
             <p className="text-gray-700 mb-4 font-semibold">
               We&apos;re always looking for passionate educators who love working with children.
             </p>
-            <a 
-              href="#contact" 
-              className="inline-block bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-3 rounded-full font-bold hover:shadow-lg transition-all"
-            >
-              Contact Us
-            </a>
+<a href="/contact" className="inline-block bg-[#243bb5] hover:bg-blue-800 text-white px-8 py-4 rounded-full text-lg font-bold transition-all shadow-lg hover:shadow-xl mt-4">
+  Contact Us
+</a>
           </div>
         </div>
       </div>
