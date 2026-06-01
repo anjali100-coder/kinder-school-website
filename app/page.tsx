@@ -36,10 +36,6 @@ export default function Home() {
         </ScrollReveal>
 
         <ScrollReveal>
-          <ClassPhotosSection />
-        </ScrollReveal>
-
-        <ScrollReveal>
           <Testimonials />
         </ScrollReveal>
 
