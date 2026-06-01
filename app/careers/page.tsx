@@ -10,7 +10,7 @@ export default function CareersPage() {
           Join Our Team
         </h1>
         <p className="text-lg text-gray-600">
-          Cecil Convent School Junior Playway mein apply karne ke liye niche di gayi details fill karein aur apna resume upload karein.
+          Please fill out the details below and upload your resume to apply for a position at Cecil Convent School Junior Playway.
         </p>
       </div>
 
@@ -21,7 +21,7 @@ export default function CareersPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {/* 1. Full Name */}
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Full Name (Pura Naam)</label>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Full Name</label>
               <input type="text" className="w-full border border-gray-300 rounded-lg px-4 py-3" placeholder="e.g. Manish Sharma" required />
             </div>
 
@@ -77,7 +77,7 @@ export default function CareersPage() {
           {/* 9. Short Description / Message */}
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-2">Why do you want to join us?</label>
-            <textarea rows={4} className="w-full border border-gray-300 rounded-lg px-4 py-3" placeholder="Thoda apne baare mein batayein..." required></textarea>
+            <textarea rows={4} className="w-full border border-gray-300 rounded-lg px-4 py-3" placeholder="Tell us a little bit about yourself and why you'd be a great fit..." required></textarea>
           </div>
 
           {/* 10. Resume Upload Field */}
