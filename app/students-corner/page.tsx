@@ -18,7 +18,7 @@ export default function StudentsCorner() {
       id: 3,
       title: "Creative Arts",
       description: "Expressing thoughts through colors and crafts helps build fine motor skills and boosts creative thinking in our little artists.",
-      src: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=800&q=80"
+      src: "/art.jfif"
     }
   ];
 
