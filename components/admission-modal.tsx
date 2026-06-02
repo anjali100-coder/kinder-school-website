@@ -97,39 +97,61 @@ export function AdmissionModal({ isOpen, onClose }: AdmissionModalProps) {
           </div>
         </DialogHeader>
 
-       {isSubmitted ? (
-          
-          /* 1. जब फॉर्म सबमिट हो जाएगा, तो यह दिखेगा */
-          <div className="flex flex-col items-center justify-center py-10 text-center">
-            <div className="text-green-500 text-6xl mb-4">✅</div>
-            <h2 className="text-2xl font-bold text-gray-800 mb-2">Submitted Successfully!</h2>
-            <p className="text-gray-600 mb-6">Thank you for your inquiry. We will contact you soon.</p>
-            <Button 
-              onClick={() => {
-                setIsSubmitted(false);
-                onClose(); 
-              }}
-              className="bg-blue-600 text-white hover:bg-blue-700"
-            >
-              Close
-            </Button>
-          </div>
-
-        ) : (
-
-          /* 2. जब तक फॉर्म सबमिट नहीं हुआ है, तब तक यह फॉर्म दिखेगा */
-          <form onSubmit={handleSubmit} className="space-y-4">
+       <form onSubmit={handleSubmit} className="space-y-4 pt-4">
             
-            {/* --- यहाँ आपके फॉर्म के सारे पुराने Inputs आएंगे --- */}
-            {/* (जैसे Name, Class, Father Name वाले डिब्बे यहीं रहने दें) */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label>Student's Full Name *</Label>
+                <Input required placeholder="e.g. Rahul Sharma" value={formData.studentName} onChange={(e) => setFormData({...formData, studentName: e.target.value})} />
+              </div>
+              <div className="space-y-2">
+                <Label>Date of Birth *</Label>
+                <Input required type="date" />
+              </div>
+              
+              <div className="space-y-2">
+                <Label>Class Applying For *</Label>
+                <Select onValueChange={(value) => setFormData({...formData, class: value})}>
+                  <SelectTrigger><SelectValue placeholder="Select class" /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Playway">Playway</SelectItem>
+                    <SelectItem value="Nursery">Nursery</SelectItem>
+                    <SelectItem value="LKG">LKG</SelectItem>
+                    <SelectItem value="UKG">UKG</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label>Aadhaar Card Number *</Label>
+                <Input required placeholder="XXXX XXXX XXXX" />
+              </div>
+
+              <div className="space-y-2">
+                <Label>Father's / Mother's Name *</Label>
+                <Input required placeholder="Enter parent's name" value={formData.fatherName} onChange={(e) => setFormData({...formData, fatherName: e.target.value})} />
+              </div>
+              <div className="space-y-2">
+                <Label>Phone Number *</Label>
+                <Input required placeholder="+91 XXXXXXXXXX" value={formData.phoneNumber} onChange={(e) => setFormData({...formData, phoneNumber: e.target.value})} />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label>Residential Address *</Label>
+              <Input required placeholder="Enter complete address" />
+            </div>
+
+            <div className="pt-2 pb-4">
+              <span className="text-sm font-medium text-blue-600 hover:underline cursor-pointer">
+                Upload Required Documents
+              </span>
+            </div>
             
-            {/* फॉर्म का सबसे नीचे वाला सबमिट बटन */}
-            <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white">
+            <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-md">
               Submit Inquiry
             </Button>
+            
           </form>
-
-        )}
       </DialogContent>
     </Dialog>
   )
