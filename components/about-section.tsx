@@ -21,9 +21,9 @@ export function AboutSection() {
 
           
           <div>
-            <h2 className="text-3xl md:text-4xl font-extrabold text-[#243bb5] mb-6 leading-tight">
-              Where Every Child's Journey Begins <br/> <span className="text-[#f07b46]">with Joy</span>
-            </h2>
+            <h2 className="text-2xl md:text-3xl font-bold text-blue-900 mb-4 leading-tight">
+  Where Every Child's Journey Begins <span className="text-red-500">with Joy</span>
+</h2>
             
             <div className="space-y-6 text-gray-600 text-lg leading-relaxed">
               <p>
