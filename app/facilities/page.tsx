@@ -73,11 +73,7 @@ export default function FacilitiesPage() {
           <h2 className="text-3xl font-bold text-blue-900 mb-6">Experience Our Campus Live</h2>
           <p className="text-lg text-gray-700 mb-8">We invite parents to visit Cecil Convent School and see these world-class facilities in person.</p>
           <div className="flex justify-center gap-4">
-            <Link href="/#about">
-              <button className="bg-[#243bb5] hover:bg-blue-800 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-all">
-                Contact Us
-              </button>
-            </Link>
+            
           </div>
         </div>
       </div>
