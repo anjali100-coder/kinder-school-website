@@ -37,6 +37,7 @@ export function AdmissionModal({ isOpen, onClose }: AdmissionModalProps) {
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
+    alert("Form is submitting...");
     e.preventDefault()
     
     // Validate form
