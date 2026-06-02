@@ -18,12 +18,13 @@ interface AdmissionModalProps {
 }
 
 export function AdmissionModal({ isOpen, onClose }: AdmissionModalProps) {
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     studentName: '',
     class: '',
     fatherName: '',
     phoneNumber: '',
-  })
+  });
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,7 +55,7 @@ export function AdmissionModal({ isOpen, onClose }: AdmissionModalProps) {
     setIsSubmitting(true)
 
     try {
-      // 2. YAHAN HUM DATA KO SUPABASE DATABASE MEIN BHEJ RAHE HAIN
+      
       const { error } = await supabase
         .from('enquiries')
         .insert([
@@ -74,7 +75,7 @@ export function AdmissionModal({ isOpen, onClose }: AdmissionModalProps) {
 
       toast.success('Admission inquiry submitted successfully! We will contact you soon.')
       setFormData({ studentName: '', class: '', fatherName: '', phoneNumber: '' })
-      onClose()
+      setIsSubmitted(true)
     } catch (error) {
       toast.error('Something went wrong. Please try again.')
     } finally {
@@ -96,91 +97,39 @@ export function AdmissionModal({ isOpen, onClose }: AdmissionModalProps) {
           </div>
         </DialogHeader>
 
-       <form className="space-y-4 max-h-[70vh] overflow-y-auto pr-2">
-  
-  {/* Basic Details - 2 Column Grid */}
-  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-    {/* Student Name */}
-    <div>
-      <label className="block text-sm font-semibold text-gray-700 mb-1">Student's Full Name *</label>
-      <input type="text" className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none" placeholder="e.g. Rahul Sharma" required />
-    </div>
+       {isSubmitted ? (
+          
+          /* 1. जब फॉर्म सबमिट हो जाएगा, तो यह दिखेगा */
+          <div className="flex flex-col items-center justify-center py-10 text-center">
+            <div className="text-green-500 text-6xl mb-4">✅</div>
+            <h2 className="text-2xl font-bold text-gray-800 mb-2">Submitted Successfully!</h2>
+            <p className="text-gray-600 mb-6">Thank you for your inquiry. We will contact you soon.</p>
+            <Button 
+              onClick={() => {
+                setIsSubmitted(false);
+                onClose(); 
+              }}
+              className="bg-blue-600 text-white hover:bg-blue-700"
+            >
+              Close
+            </Button>
+          </div>
 
-    {/* Date of Birth */}
-    <div>
-      <label className="block text-sm font-semibold text-gray-700 mb-1">Date of Birth *</label>
-      <input type="date" className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none" required />
-    </div>
+        ) : (
 
-    {/* Class */}
-    <div>
-      <label className="block text-sm font-semibold text-gray-700 mb-1">Class Applying For *</label>
-      <select className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none" required>
-        <option value="">Select class...</option>
-        <option value="playway">Playway</option>
-        <option value="nursery">Nursery</option>
-        <option value="lkg">LKG</option>
-        <option value="ukg">UKG</option>
-      </select>
-    </div>
+          /* 2. जब तक फॉर्म सबमिट नहीं हुआ है, तब तक यह फॉर्म दिखेगा */
+          <form onSubmit={handleSubmit} className="space-y-4">
+            
+            {/* --- यहाँ आपके फॉर्म के सारे पुराने Inputs आएंगे --- */}
+            {/* (जैसे Name, Class, Father Name वाले डिब्बे यहीं रहने दें) */}
+            
+            {/* फॉर्म का सबसे नीचे वाला सबमिट बटन */}
+            <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white">
+              Submit Inquiry
+            </Button>
+          </form>
 
-    {/* Aadhaar Number */}
-    <div>
-      <label className="block text-sm font-semibold text-gray-700 mb-1">Aadhaar Card Number *</label>
-      <input type="text" className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none" placeholder="XXXX XXXX XXXX" required />
-    </div>
-
-    {/* Father/Mother Name */}
-    <div>
-      <label className="block text-sm font-semibold text-gray-700 mb-1">Father's / Mother's Name *</label>
-      <input type="text" className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Enter parent's name" required />
-    </div>
-
-    {/* Phone Number */}
-    <div>
-      <label className="block text-sm font-semibold text-gray-700 mb-1">Phone Number *</label>
-      <input type="tel" className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none" placeholder="+91 XXXXX XXXXX" required />
-    </div>
-  </div>
-
-  {/* Full Width Address Field */}
-  <div>
-    <label className="block text-sm font-semibold text-gray-700 mb-1">Residential Address *</label>
-    <textarea rows={2} className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Enter complete address" required></textarea>
-  </div>
-
-  {/* Document Upload Section */}
-  <div className="bg-blue-50 p-4 rounded-xl border border-blue-100 mt-2">
-    <h3 className="font-bold text-blue-900 mb-3 border-b border-blue-200 pb-2">Upload Required Documents</h3>
-    
-    <div className="space-y-3">
-      {/* 1. Aadhaar Card Upload */}
-      <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-1">1. Aadhaar Card (PDF / Image) *</label>
-        <input type="file" accept=".pdf,.jpg,.jpeg,.png" className="w-full text-sm text-gray-600 bg-white border border-gray-300 rounded-md file:bg-blue-100 file:text-blue-700 file:border-0 file:px-4 file:py-2 file:mr-4 hover:file:bg-blue-200 cursor-pointer" required />
-      </div>
-      
-      {/* 2. Birth Certificate Upload */}
-      <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-1">2. Birth Certificate (PDF / Image) *</label>
-        <input type="file" accept=".pdf,.jpg,.jpeg,.png" className="w-full text-sm text-gray-600 bg-white border border-gray-300 rounded-md file:bg-blue-100 file:text-blue-700 file:border-0 file:px-4 file:py-2 file:mr-4 hover:file:bg-blue-200 cursor-pointer" required />
-      </div>
-
-      {/* 3. Student Photo */}
-      <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-1">3. Student's Passport Size Photo *</label>
-        <input type="file" accept=".jpg,.jpeg,.png" className="w-full text-sm text-gray-600 bg-white border border-gray-300 rounded-md file:bg-blue-100 file:text-blue-700 file:border-0 file:px-4 file:py-2 file:mr-4 hover:file:bg-blue-200 cursor-pointer" required />
-      </div>
-    </div>
-  </div>
-
-  {/* Submit Button */}
-  <div className="pt-2">
-    <button type="submit" className="w-full bg-[#243bb5] hover:bg-blue-800 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-md">
-      Submit Complete Admission Form
-    </button>
-  </div>
-</form>
+        )}
       </DialogContent>
     </Dialog>
   )
