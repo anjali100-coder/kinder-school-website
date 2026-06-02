@@ -12,9 +12,7 @@ export default function JourneyPage() {
           Our Beautiful Journey
         </h1>
         <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
-          Welcome to Cecil Convent School Junior Playway. Yahan hum bachon ko sirf padhate nahi, 
-          balki unhe pyaar, creativity, aur khushi ke saath aage badhna sikhate hain. 
-          Humara aim hai aapke bache ke future ki ek mazboot neev rakhna.
+          Welcome to Cecil Convent School Junior Playway. We believe in nurturing children not just through academics, but by guiding them forward with love, creativity, and joy. Our aim is to build a strong foundation for your child's bright future.
         </p>
       </div>
 
