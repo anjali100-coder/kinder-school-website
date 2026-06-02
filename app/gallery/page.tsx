@@ -11,7 +11,7 @@ export default function Gallery() {
           {/* Photo 1 - School Campus (EKDUM NAYA LINK) */}
           <div className="bg-white border rounded-2xl overflow-hidden shadow-lg">
             <img 
-              src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=800&q=80" 
+              src="/campus.jpg" 
               alt="School Campus" 
               className="w-full h-72 object-cover" 
             />
@@ -23,7 +23,7 @@ export default function Gallery() {
           {/* Photo 2 - Art & Craft (WORKING) */}
           <div className="bg-white border rounded-2xl overflow-hidden shadow-lg">
             <img 
-              src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=800&q=80" 
+              src="/art.jfif" 
               alt="Art & Craft" 
               className="w-full h-72 object-cover" 
             />
@@ -35,7 +35,7 @@ export default function Gallery() {
           {/* Photo 3 - Sports Day (WORKING) */}
           <div className="bg-white border rounded-2xl overflow-hidden shadow-lg">
             <img 
-              src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=800&q=80" 
+              src="/sports.jfif" 
               alt="Sports Day" 
               className="w-full h-72 object-cover" 
             />
