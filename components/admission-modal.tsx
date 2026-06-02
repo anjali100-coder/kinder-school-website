@@ -76,9 +76,10 @@ export function AdmissionModal({ isOpen, onClose }: AdmissionModalProps) {
       toast.success('Admission inquiry submitted successfully! We will contact you soon.')
       setFormData({ studentName: '', class: '', fatherName: '', phoneNumber: '' })
       setIsSubmitted(true)
-    } catch (error) {
-      toast.error('Something went wrong. Please try again.')
-    } finally {
+  } catch (error: any) {
+  alert("Submission Error: " + (error.message || "Something went wrong"));
+  console.error(error);
+} finally {
       setIsSubmitting(false)
     }
   }
