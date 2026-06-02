@@ -49,13 +49,13 @@ export function Footer() {
           </div>
 
           {/* Column 2: Quick Links */}
-          {/* Column 2: Quick Links */}
+
 <div>
   <h3 className="text-lg font-bold mb-4 text-white">Quick Links</h3>
   <ul className="space-y-2 text-sm text-blue-200">
-    <li><a href="/" className="hover:text-yellow-400 transition-colors">About Us</a></li>
-    <li><a href="/" className="hover:text-yellow-400 transition-colors">Principal's Message</a></li>
-    <li><a href="/" className="hover:text-yellow-400 transition-colors">Our Staff</a></li>
+    <li><a href="/#about" className="hover:text-yellow-400 transition-colors">About Us</a></li>
+    <li><a href="/#principal" className="hover:text-yellow-400 transition-colors">Principal's Message</a></li>
+    <li><a href="/#staff" className="hover:text-yellow-400 transition-colors">Our Staff</a></li>
     <li><a href="/gallery" className="hover:text-yellow-400 transition-colors">Gallery</a></li>
   </ul>
 </div>
