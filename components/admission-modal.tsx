@@ -25,7 +25,42 @@ export function AdmissionModal({ isOpen, onClose }: AdmissionModalProps) {
     email: '',
   });
 
+const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
 
+    try {
+      const response = await fetch("https://formsubmit.co/ajax/attri.anjali86@gmail.com", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+        },
+        body: JSON.stringify({
+            student_name: formData.studentName,
+            class_name: formData.class,
+            parent_name: formData.fatherName,
+            phone: formData.phoneNumber,
+            email: formData.email,
+            _subject: "New Admission Inquiry - Cecil Convent School",
+            _template: "table"
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error("Form submission failed");
+      }
+
+      alert('Admission inquiry submitted successfully!');
+      setFormData({ studentName: '', class: '', fatherName: '', phoneNumber: '', email: '' });
+
+    } catch (error: any) {
+      alert("Submission Error: " + (error.message || "Something went wrong"));
+      console.error(error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[600px] bg-white text-gray-900 border border-gray-200">
@@ -51,12 +86,7 @@ export function AdmissionModal({ isOpen, onClose }: AdmissionModalProps) {
             </Button>
           </div>
         ) : (
-          <form action="https://formsubmit.co/attri.anjali86@gmail.com" method="POST">
-
-  
-  <input type="hidden" name="_subject" value="New Admission Inquiry - Cecil Convent School" />
-  <input type="hidden" name="_autoresponse" value="Dear Parents, Thank you for your application. We are pleased to inform you that your child has been selected for the admission process at Cecil Convent School, Ambala." />
-  <input type="hidden" name="_captcha" value="false" />
+          <form onSubmit={handleSubmit} className="space-y-4 pt-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label>Student's Full Name *</Label>
