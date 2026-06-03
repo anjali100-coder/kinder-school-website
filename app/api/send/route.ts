@@ -1,7 +1,7 @@
 import { Resend } from 'resend';
 import { NextResponse } from 'next/server';
 
-const resend = new Resend('YOUR_RESEND_API_KEY'); // अपनी असली API Key डालना न भूलें
+const resend = new Resend('re_j5hiHNEZ_M3ob4EnuB3wMjQ9aAQYyjnSx'); 
 
 export async function POST(request: Request) {
   try {
