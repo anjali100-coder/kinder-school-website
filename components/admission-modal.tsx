@@ -34,8 +34,8 @@ export function AdmissionModal({ isOpen, onClose }: AdmissionModalProps) {
 
       // ईमेल भेजने वाला कोड
       await emailjs.send(
-        'YOUR_SERVICE_ID',   
-        'YOUR_TEMPLATE_ID',  
+        'service_22qhh8g',   
+        'template_l1aango',  
         {
           student_name: formData.studentName,
           class_name: formData.class,
@@ -43,7 +43,7 @@ export function AdmissionModal({ isOpen, onClose }: AdmissionModalProps) {
           phone: formData.phoneNumber,
           reply_to: formData.email,
         },
-        'YOUR_PUBLIC_KEY'    
+        '312UDfkbo_8V3Kn-N'    
       );
 
       toast.success('Admission inquiry submitted successfully!');
