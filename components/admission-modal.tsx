@@ -25,47 +25,6 @@ export function AdmissionModal({ isOpen, onClose }: AdmissionModalProps) {
     email: '',
   });
 
-const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    try {
-      const formSubmitData = new FormData();
-      // फॉर्म का डेटा
-      formSubmitData.append("student_name", formData.studentName);
-      formSubmitData.append("class_name", formData.class);
-      formSubmitData.append("parent_name", formData.fatherName);
-      formSubmitData.append("phone", formData.phoneNumber);
-      formSubmitData.append("email", formData.email); 
-      
-      // FormSubmit की वो सेटिंग्स जो ऑटो-रिप्लाई को ब्लॉक होने से रोकेंगी
-      formSubmitData.append("_replyto", formData.email); // यह सर्वर को बताता है कि रिप्लाई इसी पर जाना है
-      formSubmitData.append("_captcha", "false"); // यह बैकग्राउंड में ईमेल को स्पैम में जाने से रोकता है
-      formSubmitData.append("_autoresponse", "Dear Parents, Thank you for your application. We are pleased to inform you that your child has been selected for the admission process at Cecil Convent School, Ambala.");
-      formSubmitData.append("_subject", "New Admission Inquiry - Cecil Convent School");
-      formSubmitData.append("_template", "table");
-
-      // रिक्वेस्ट भेजना
-      const response = await fetch("https://formsubmit.co/ajax/attri.anjali86@gmail.com", {
-        method: "POST",
-        body: formSubmitData
-      });
-
-      if (!response.ok) {
-        throw new Error("Form submission failed");
-      }
-
-      toast.success('Admission inquiry submitted successfully!');
-      setFormData({ studentName: '', class: '', fatherName: '', phoneNumber: '', email: '' });
-      setIsSubmitted(true);
-
-    } catch (error: any) {
-      alert("Submission Error: " + (error.message || "Something went wrong"));
-      console.error(error);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -92,7 +51,12 @@ const handleSubmit = async (e: React.FormEvent) => {
             </Button>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-4 pt-4">
+          <form action="https://formsubmit.co/attri.anjali86@gmail.com" method="POST">
+
+  
+  <input type="hidden" name="_subject" value="New Admission Inquiry - Cecil Convent School" />
+  <input type="hidden" name="_autoresponse" value="Dear Parents, Thank you for your application. We are pleased to inform you that your child has been selected for the admission process at Cecil Convent School, Ambala." />
+  <input type="hidden" name="_captcha" value="false" />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label>Student's Full Name *</Label>
