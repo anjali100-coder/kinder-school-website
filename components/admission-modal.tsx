@@ -30,32 +30,24 @@ const handleSubmit = async (e: React.FormEvent) => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch("https://formsubmit.co/ajax/attri.anjali86@gmail.com", {
-        method: "POST",
+      const response = await fetch('/api/send', {
+        method: 'POST',
         headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-            student_name: formData.studentName,
-            class_name: formData.class,
-            parent_name: formData.fatherName,
-            phone: formData.phoneNumber,
-            email: formData.email,
-            _subject: "New Admission Inquiry - Cecil Convent School",
-            _template: "table"
-        })
+        body: JSON.stringify(formData),
       });
 
       if (!response.ok) {
-        throw new Error("Form submission failed");
+        throw new Error('Failed to send email');
       }
 
-      alert('Admission inquiry submitted successfully!');
+      toast.success('Admission inquiry submitted successfully!');
       setFormData({ studentName: '', class: '', fatherName: '', phoneNumber: '', email: '' });
+      setIsSubmitted(true);
 
     } catch (error: any) {
-      alert("Submission Error: " + (error.message || "Something went wrong"));
+      alert("Submission Error: Something went wrong");
       console.error(error);
     } finally {
       setIsSubmitting(false);
