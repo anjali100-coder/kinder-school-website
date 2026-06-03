@@ -30,23 +30,25 @@ const handleSubmit = async (e: React.FormEvent) => {
     setIsSubmitting(true);
 
     try {
-      // FormSubmit का नया FormData तरीका (जो Auto-Reply को फोर्स करेगा)
       const formSubmitData = new FormData();
+      // फॉर्म का डेटा
       formSubmitData.append("student_name", formData.studentName);
       formSubmitData.append("class_name", formData.class);
       formSubmitData.append("parent_name", formData.fatherName);
       formSubmitData.append("phone", formData.phoneNumber);
-      formSubmitData.append("email", formData.email); // पेरेंट्स का ईमेल
+      formSubmitData.append("email", formData.email); 
       
-      // FormSubmit की सेटिंग्स (अब यह इग्नोर नहीं होंगी)
-      formSubmitData.append("_subject", "New Admission Inquiry - Cecil Convent School");
+      // FormSubmit की वो सेटिंग्स जो ऑटो-रिप्लाई को ब्लॉक होने से रोकेंगी
+      formSubmitData.append("_replyto", formData.email); // यह सर्वर को बताता है कि रिप्लाई इसी पर जाना है
+      formSubmitData.append("_captcha", "false"); // यह बैकग्राउंड में ईमेल को स्पैम में जाने से रोकता है
       formSubmitData.append("_autoresponse", "Dear Parents, Thank you for your application. We are pleased to inform you that your child has been selected for the admission process at Cecil Convent School, Ambala.");
-      formSubmitData.append("_template", "table"); // इससे आपके पास आने वाला ईमेल सुंदर टेबल डिज़ाइन में आएगा
+      formSubmitData.append("_subject", "New Admission Inquiry - Cecil Convent School");
+      formSubmitData.append("_template", "table");
 
-      // यहाँ मैंने आपकी ईमेल आईडी पहले से डाल दी है
+      // रिक्वेस्ट भेजना
       const response = await fetch("https://formsubmit.co/ajax/attri.anjali86@gmail.com", {
         method: "POST",
-        body: formSubmitData // हमने JSON की जगह FormData भेज दिया
+        body: formSubmitData
       });
 
       if (!response.ok) {
