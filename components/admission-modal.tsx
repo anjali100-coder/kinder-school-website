@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Button } from '@/components/ui/button'
 import { toast } from 'sonner'
-import emailjs from '@emailjs/browser'
+
 
 interface AdmissionModalProps {
   isOpen: boolean;
@@ -30,21 +30,24 @@ export function AdmissionModal({ isOpen, onClose }: AdmissionModalProps) {
     setIsSubmitting(true);
 
     try {
-      // (अगर आप यहाँ Supabase का कोड लगाना चाहते हैं, तो वह यहाँ आएगा)
-
-      // ईमेल भेजने वाला कोड
-      await emailjs.send(
-        'service_22qhh8g',   
-        'template_l1aango',  
-        {
+      // Web3Forms भेजने वाला कोड
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          access_key: "9463c284-be41-42bb-b89f-c73f51faa331", // आपकी नई Access Key
+          subject: "New Admission Inquiry - Cecil Convent School",
           student_name: formData.studentName,
           class_name: formData.class,
           parent_name: formData.fatherName,
           phone: formData.phoneNumber,
           reply_to: formData.email,
-        },
-        '312UDfkbo_8V3Kn-N'    
-      );
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Form submission failed");
+      }
 
       toast.success('Admission inquiry submitted successfully!');
       setFormData({ studentName: '', class: '', fatherName: '', phoneNumber: '', email: '' });
@@ -56,7 +59,7 @@ export function AdmissionModal({ isOpen, onClose }: AdmissionModalProps) {
     } finally {
       setIsSubmitting(false);
     }
-  }
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
