@@ -30,22 +30,23 @@ const handleSubmit = async (e: React.FormEvent) => {
     setIsSubmitting(true);
 
     try {
-      // FormSubmit का नया कोड 
-      const response = await fetch("https://formsubmit.co/ajax/attri.anjali86@gmail.com", { // <-- यहाँ अपनी असली ईमेल आईडी डालें
+      // FormSubmit का नया FormData तरीका (जो Auto-Reply को फोर्स करेगा)
+      const formSubmitData = new FormData();
+      formSubmitData.append("student_name", formData.studentName);
+      formSubmitData.append("class_name", formData.class);
+      formSubmitData.append("parent_name", formData.fatherName);
+      formSubmitData.append("phone", formData.phoneNumber);
+      formSubmitData.append("email", formData.email); // पेरेंट्स का ईमेल
+      
+      // FormSubmit की सेटिंग्स (अब यह इग्नोर नहीं होंगी)
+      formSubmitData.append("_subject", "New Admission Inquiry - Cecil Convent School");
+      formSubmitData.append("_autoresponse", "Dear Parents, Thank you for your application. We are pleased to inform you that your child has been selected for the admission process at Cecil Convent School, Ambala.");
+      formSubmitData.append("_template", "table"); // इससे आपके पास आने वाला ईमेल सुंदर टेबल डिज़ाइन में आएगा
+
+      // यहाँ मैंने आपकी ईमेल आईडी पहले से डाल दी है
+      const response = await fetch("https://formsubmit.co/ajax/attri.anjali86@gmail.com", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
-        body: JSON.stringify({
-          student_name: formData.studentName,
-          class_name: formData.class,
-          parent_name: formData.fatherName,
-          phone: formData.phoneNumber,
-          email: formData.email, // <-- इसी ईमेल को पढ़कर FormSubmit पेरेंट्स को रिप्लाई करेगा
-          _subject: "New Admission Inquiry - Cecil Convent School",
-          _autoresponse: "Dear Parents, Thank you for your application. We are pleased to inform you that your child has been selected for the admission process at Cecil Convent School, Ambala." // <-- यह मैसेज पेरेंट्स को ऑटोमैटिक चला जाएगा
-        }),
+        body: formSubmitData // हमने JSON की जगह FormData भेज दिया
       });
 
       if (!response.ok) {
