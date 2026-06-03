@@ -25,23 +25,26 @@ export function AdmissionModal({ isOpen, onClose }: AdmissionModalProps) {
     email: '',
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
+const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
-      // Web3Forms भेजने वाला कोड
-      const response = await fetch("https://api.web3forms.com/submit", {
+      // FormSubmit का नया कोड 
+      const response = await fetch("https://formsubmit.co/ajax/YOUR_EMAIL@GMAIL.COM", { // <-- यहाँ अपनी असली ईमेल आईडी डालें
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
         body: JSON.stringify({
-          access_key: "9463c284-be41-42bb-b89f-c73f51faa331", // आपकी नई Access Key
-          subject: "New Admission Inquiry - Cecil Convent School",
           student_name: formData.studentName,
           class_name: formData.class,
           parent_name: formData.fatherName,
           phone: formData.phoneNumber,
-          reply_to: formData.email,
+          email: formData.email, // <-- इसी ईमेल को पढ़कर FormSubmit पेरेंट्स को रिप्लाई करेगा
+          _subject: "New Admission Inquiry - Cecil Convent School",
+          _autoresponse: "Dear Parents, Thank you for your application. We are pleased to inform you that your child has been selected for the admission process at Cecil Convent School, Ambala." // <-- यह मैसेज पेरेंट्स को ऑटोमैटिक चला जाएगा
         }),
       });
 
