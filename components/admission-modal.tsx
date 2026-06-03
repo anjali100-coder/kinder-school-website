@@ -31,7 +31,7 @@ const handleSubmit = async (e: React.FormEvent) => {
 
     try {
       // FormSubmit का नया कोड 
-      const response = await fetch("https://formsubmit.co/ajax/YOUR_EMAIL@GMAIL.COM", { // <-- यहाँ अपनी असली ईमेल आईडी डालें
+      const response = await fetch("https://formsubmit.co/ajax/attri.anjali86@gmail.com", { // <-- यहाँ अपनी असली ईमेल आईडी डालें
         method: "POST",
         headers: {
           "Content-Type": "application/json",
