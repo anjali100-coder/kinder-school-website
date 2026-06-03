@@ -92,8 +92,8 @@ export function AdmissionModal({ isOpen, onClose }: AdmissionModalProps) {
               </div>
               <div className="space-y-2">
                 <Label>Email Address *</Label>
-                <Input required type="email" placeholder="e.g. name@example.com" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} />
-              </div>
+                <Input name="email" required type="email" placeholder="e.g. name@example.com" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} />
+                              </div>
             </div>
 
             <div className="space-y-2">
