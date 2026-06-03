@@ -1,18 +1,16 @@
 import { Resend } from 'resend';
 import { NextResponse } from 'next/server';
 
-// यहाँ अपनी असली Resend API Key डालें (jo re_ se shuru hoti hai)
-const resend = new Resend('re_WPSDjw3g_8LUQJ2yDhyXJaU7FvjpWX894'); 
+const resend = new Resend('YOUR_RESEND_API_KEY'); // अपनी असली API Key डालना न भूलें
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
     const { studentName, class: className, fatherName, phoneNumber, email } = body;
 
-    // स्कूल को एडमिशन फॉर्म की डिटेल्स भेजना
     const data = await resend.emails.send({
-      from: 'Acme <onboarding@resend.dev>', // अभी के लिए इसे ऐसे ही रहने दें
-      to: ['attri.anjali86@gmail.com'], // आपके स्कूल की ईमेल आईडी
+      from: 'Acme <onboarding@resend.dev>',
+      to: ['attri.anjali86@gmail.com'],
       subject: `New Admission Inquiry - ${studentName}`,
       html: `
         <h2>New Admission Request</h2>
