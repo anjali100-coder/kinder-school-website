@@ -7,7 +7,12 @@ import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Button } from '@/components/ui/button'
 import { toast } from 'sonner'
+import { createClient } from '@supabase/supabase-js'
 
+// Supabase Connection
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 interface AdmissionModalProps {
   isOpen: boolean;
@@ -17,19 +22,43 @@ interface AdmissionModalProps {
 export function AdmissionModal({ isOpen, onClose }: AdmissionModalProps) {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  // Maine yahan dob, aadhaarNumber aur address bhi jod diya hai
   const [formData, setFormData] = useState({
     studentName: '',
     class: '',
     fatherName: '',
     phoneNumber: '',
     email: '',
+    dob: '',
+    aadhaarNumber: '',
+    address: '',
   });
 
-const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
+      // 1. Sabse pehle Supabase mein data bhejna
+      const { error: supabaseError } = await supabase.from('enquiries').insert([
+        {
+          student_name: formData.studentName,
+          dob: formData.dob,
+          class_name: formData.class,
+          aadhaar_number: formData.aadhaarNumber,
+          parent_name: formData.fatherName,
+          phone_number: formData.phoneNumber,
+          email: formData.email,
+          address: formData.address,
+        }
+      ]);
+
+      if (supabaseError) {
+        throw new Error('Supabase error: ' + supabaseError.message);
+      }
+
+      // 2. Uske baad Email send karna (Aapka purana code)
       const response = await fetch('/api/send', {
         method: 'POST',
         headers: {
@@ -43,7 +72,8 @@ const handleSubmit = async (e: React.FormEvent) => {
       }
 
       toast.success('Admission inquiry submitted successfully!');
-      setFormData({ studentName: '', class: '', fatherName: '', phoneNumber: '', email: '' });
+      // Form ko wapas khali karna
+      setFormData({ studentName: '', class: '', fatherName: '', phoneNumber: '', email: '', dob: '', aadhaarNumber: '', address: '' });
       setIsSubmitted(true);
 
     } catch (error: any) {
@@ -53,6 +83,7 @@ const handleSubmit = async (e: React.FormEvent) => {
       setIsSubmitting(false);
     }
   };
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[600px] bg-white text-gray-900 border border-gray-200">
@@ -86,7 +117,7 @@ const handleSubmit = async (e: React.FormEvent) => {
               </div>
               <div className="space-y-2">
                 <Label>Date of Birth *</Label>
-                <Input required type="date" />
+                <Input required type="date" value={formData.dob} onChange={(e) => setFormData({...formData, dob: e.target.value})} />
               </div>
               <div className="space-y-2">
                 <Label>Class Applying For *</Label>
@@ -102,7 +133,7 @@ const handleSubmit = async (e: React.FormEvent) => {
               </div>
               <div className="space-y-2">
                 <Label>Aadhaar Card Number *</Label>
-                <Input required placeholder="XXXX XXXX XXXX" />
+                <Input required placeholder="XXXX XXXX XXXX" value={formData.aadhaarNumber} onChange={(e) => setFormData({...formData, aadhaarNumber: e.target.value})} />
               </div>
               <div className="space-y-2">
                 <Label>Father's / Mother's Name *</Label>
@@ -115,12 +146,12 @@ const handleSubmit = async (e: React.FormEvent) => {
               <div className="space-y-2">
                 <Label>Email Address *</Label>
                 <Input name="email" required type="email" placeholder="e.g. name@example.com" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} />
-                              </div>
+              </div>
             </div>
 
             <div className="space-y-2">
               <Label>Residential Address *</Label>
-              <Input required placeholder="Enter complete address" />
+              <Input required placeholder="Enter complete address" value={formData.address} onChange={(e) => setFormData({...formData, address: e.target.value})} />
             </div>
 
             <div className="pt-2 pb-4">
