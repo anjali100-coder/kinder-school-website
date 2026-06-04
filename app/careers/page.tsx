@@ -1,6 +1,105 @@
-import React from 'react';
+"use client";
+
+import React, { useState } from 'react';
+import { createClient } from '@supabase/supabase-js';
+
+// Supabase Connection
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 export default function CareersPage() {
+  const [loading, setLoading] = useState(false);
+  const [successMsg, setSuccessMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    mobileNumber: '',
+    qualification: '',
+    experience: '',
+    position: '',
+    expectedSalary: '',
+    address: '',
+    message: ''
+  });
+
+  const [resumeFile, setResumeFile] = useState<File | null>(null);
+
+  const handleChange = (e: any) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleFileChange = (e: any) => {
+    if (e.target.files && e.target.files[0]) {
+      setResumeFile(e.target.files[0]);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setErrorMsg("");
+    setSuccessMsg("");
+
+    try {
+      let resumeUrl = "";
+
+      // 1. Agar user ne Resume upload kiya hai, toh pehle use Supabase Storage mein bhejenge
+      if (resumeFile) {
+        const fileExt = resumeFile.name.split('.').pop();
+        const fileName = `${Date.now()}-${Math.random()}.${fileExt}`;
+        
+        const { data: uploadData, error: uploadError } = await supabase.storage
+          .from('resumes') // Ye wahi bucket hai jo aapne banaya hai
+          .upload(fileName, resumeFile);
+
+        if (uploadError) {
+          throw new Error("Resume upload hone mein dikkat aayi: " + uploadError.message);
+        }
+
+        // Upload hone ke baad uska Public Link nikalenge
+        const { data: publicUrlData } = supabase.storage
+          .from('resumes')
+          .getPublicUrl(fileName);
+
+        resumeUrl = publicUrlData.publicUrl;
+      }
+
+      // 2. Ab baaki ka text data aur Resume ka link Table mein bhejenge
+      const { error: insertError } = await supabase.from('job_applications').insert([
+        {
+          full_name: formData.fullName,
+          email: formData.email,
+          mobile_number: formData.mobileNumber,
+          qualification: formData.qualification,
+          experience: formData.experience,
+          position: formData.position,
+          expected_salary: formData.expectedSalary,
+          address: formData.address,
+          message: formData.message,
+          resume_url: resumeUrl // Ye naya column hai
+        }
+      ]);
+
+      if (insertError) {
+        throw new Error("Form jama karne mein dikkat aayi: " + insertError.message);
+      }
+
+      setSuccessMsg("Aapki application safaltapurvak jama ho gayi hai! Hum jald aapse sampark karenge.");
+      // Form ko wapas khali karna
+      setFormData({ fullName: '', email: '', mobileNumber: '', qualification: '', experience: '', position: '', expectedSalary: '', address: '', message: '' });
+      setResumeFile(null);
+
+    } catch (error: any) {
+      console.error(error);
+      setErrorMsg(error.message || "Kuch galat ho gaya, kripya dobara koshish karein.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="max-w-4xl mx-auto px-4 py-16 mt-10">
       
@@ -16,43 +115,48 @@ export default function CareersPage() {
 
       {/* Job Application Form */}
       <div className="bg-white shadow-2xl rounded-3xl p-8 sm:p-12 border-t-8 border-[#243bb5]">
-        <form className="space-y-6">
+        
+        {/* Success / Error Messages */}
+        {successMsg && <div className="mb-6 p-4 bg-green-100 text-green-700 rounded-lg text-center font-bold">{successMsg}</div>}
+        {errorMsg && <div className="mb-6 p-4 bg-red-100 text-red-700 rounded-lg text-center font-bold">{errorMsg}</div>}
+
+        <form onSubmit={handleSubmit} className="space-y-6">
           
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {/* 1. Full Name */}
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">Full Name</label>
-              <input type="text" className="w-full border border-gray-300 rounded-lg px-4 py-3" placeholder="e.g. Manish Sharma" required />
+              <input type="text" name="fullName" value={formData.fullName} onChange={handleChange} className="w-full border border-gray-300 rounded-lg px-4 py-3" placeholder="e.g. Manish Sharma" required />
             </div>
 
             {/* 2. Email Address */}
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
-              <input type="email" className="w-full border border-gray-300 rounded-lg px-4 py-3" placeholder="your@email.com" required />
+              <input type="email" name="email" value={formData.email} onChange={handleChange} className="w-full border border-gray-300 rounded-lg px-4 py-3" placeholder="your@email.com" required />
             </div>
 
             {/* 3. Phone Number */}
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">Mobile Number</label>
-              <input type="tel" className="w-full border border-gray-300 rounded-lg px-4 py-3" placeholder="+91 XXXXX XXXXX" required />
+              <input type="tel" name="mobileNumber" value={formData.mobileNumber} onChange={handleChange} className="w-full border border-gray-300 rounded-lg px-4 py-3" placeholder="+91 XXXXX XXXXX" required />
             </div>
 
             {/* 4. Highest Qualification */}
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">Highest Qualification</label>
-              <input type="text" className="w-full border border-gray-300 rounded-lg px-4 py-3" placeholder="e.g. B.Ed, M.A., NTT" required />
+              <input type="text" name="qualification" value={formData.qualification} onChange={handleChange} className="w-full border border-gray-300 rounded-lg px-4 py-3" placeholder="e.g. B.Ed, M.A., NTT" required />
             </div>
 
             {/* 5. Total Experience */}
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">Teaching Experience</label>
-              <input type="text" className="w-full border border-gray-300 rounded-lg px-4 py-3" placeholder="e.g. 3 Years" required />
+              <input type="text" name="experience" value={formData.experience} onChange={handleChange} className="w-full border border-gray-300 rounded-lg px-4 py-3" placeholder="e.g. 3 Years" required />
             </div>
 
             {/* 6. Position Applied For */}
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">Position Applied For</label>
-              <select className="w-full border border-gray-300 rounded-lg px-4 py-3" required>
+              <select name="position" value={formData.position} onChange={handleChange} className="w-full border border-gray-300 rounded-lg px-4 py-3" required>
                 <option value="">Select a position...</option>
                 <option value="playway-teacher">Playway Teacher</option>
                 <option value="nursery-teacher">Nursery Teacher</option>
@@ -64,20 +168,20 @@ export default function CareersPage() {
             {/* 7. Expected Salary */}
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">Expected Salary (₹)</label>
-              <input type="text" className="w-full border border-gray-300 rounded-lg px-4 py-3" placeholder="e.g. 15,000 / month" />
+              <input type="text" name="expectedSalary" value={formData.expectedSalary} onChange={handleChange} className="w-full border border-gray-300 rounded-lg px-4 py-3" placeholder="e.g. 15,000 / month" />
             </div>
 
             {/* 8. Current City/Address */}
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">Current Address / City</label>
-              <input type="text" className="w-full border border-gray-300 rounded-lg px-4 py-3" placeholder="e.g. Ambala Cantt" required />
+              <input type="text" name="address" value={formData.address} onChange={handleChange} className="w-full border border-gray-300 rounded-lg px-4 py-3" placeholder="e.g. Ambala Cantt" required />
             </div>
           </div>
 
           {/* 9. Short Description / Message */}
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-2">Why do you want to join us?</label>
-            <textarea rows={4} className="w-full border border-gray-300 rounded-lg px-4 py-3" placeholder="Tell us a little bit about yourself and why you'd be a great fit..." required></textarea>
+            <textarea rows={4} name="message" value={formData.message} onChange={handleChange} className="w-full border border-gray-300 rounded-lg px-4 py-3" placeholder="Tell us a little bit about yourself and why you'd be a great fit..." required></textarea>
           </div>
 
           {/* 10. Resume Upload Field */}
@@ -86,6 +190,7 @@ export default function CareersPage() {
             <input 
               type="file" 
               accept=".pdf,.doc,.docx" 
+              onChange={handleFileChange}
               className="w-full text-sm text-gray-500 cursor-pointer" 
               required
             />
@@ -93,8 +198,8 @@ export default function CareersPage() {
 
           {/* Submit Button */}
           <div className="pt-4 text-center">
-            <button type="submit" className="bg-[#243bb5] hover:bg-blue-800 text-white px-10 py-4 rounded-full text-lg font-bold w-full sm:w-auto transition-all shadow-lg hover:shadow-xl">
-              Submit Application
+            <button type="submit" disabled={loading} className="bg-[#243bb5] hover:bg-blue-800 text-white px-10 py-4 rounded-full text-lg font-bold w-full sm:w-auto transition-all shadow-lg hover:shadow-xl disabled:bg-blue-400">
+              {loading ? "Submitting Application..." : "Submit Application"}
             </button>
           </div>
 
