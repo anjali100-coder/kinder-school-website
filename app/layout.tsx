@@ -1,7 +1,7 @@
 import './globals.css'
 import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
-
+import { Toaster } from 'sonner';
 export const metadata = {
   title: 'Cecil Convent School',
   description: 'Where Little Dreams Begin to Bloom',
