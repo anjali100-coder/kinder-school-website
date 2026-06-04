@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import { createClient } from '@supabase/supabase-js';
-import { toast } from 'sonner'; // Popup ke liye add kiya hai
 
 // Supabase Connection
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
@@ -11,6 +10,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 export default function CareersPage() {
   const [loading, setLoading] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false); // Ye humara apna Popup banayega!
 
   const [formData, setFormData] = useState({
     fullName: '',
@@ -83,28 +83,43 @@ export default function CareersPage() {
         throw new Error("Data save error: " + insertError.message);
       }
 
-      // Yahan SUCCESS ka popup aayega!
-      toast.success('Aapki application safaltapurvak jama ho gayi hai!');
+      // DATA SAVE HOTE HI POPUP ON KAREIN
+      setIsSubmitted(true);
       
       // Form reset
       setFormData({ fullName: '', email: '', mobileNumber: '', qualification: '', experience: '', position: '', expectedSalary: '', address: '', message: '' });
       setResumeFile(null);
-      // File input ko clear karne ke liye
       const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
       if (fileInput) fileInput.value = '';
 
     } catch (error: any) {
       console.error(error);
-      // Yahan ERROR ka popup aayega
-      toast.error(error.message || "Kuch galat ho gaya, kripya dobara koshish karein.");
+      alert(error.message || "Kuch galat ho gaya, kripya dobara koshish karein.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-16 mt-10">
+    <div className="max-w-4xl mx-auto px-4 py-16 mt-10 relative">
       
+      {/* SUCCESS POPUP (Jab isSubmitted true hoga tabhi dikhega) */}
+      {isSubmitted && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/60 backdrop-blur-sm px-4">
+          <div className="bg-white p-8 sm:p-12 rounded-3xl shadow-2xl max-w-md w-full text-center">
+            <div className="text-green-500 text-7xl mb-6">✅</div>
+            <h2 className="text-3xl font-bold text-gray-800 mb-2">Success!</h2>
+            <p className="text-gray-600 mb-8 text-lg">Aapki application safaltapurvak jama ho gayi hai. Hum jald aapse sampark karenge.</p>
+            <button 
+              onClick={() => setIsSubmitted(false)}
+              className="bg-[#243bb5] hover:bg-blue-800 text-white px-8 py-3 rounded-full text-lg font-bold w-full transition-all"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className="text-center mb-12">
         <h1 className="text-4xl sm:text-5xl font-extrabold text-[#243bb5] mb-4">
           Join Our Team
