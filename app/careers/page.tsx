@@ -195,6 +195,7 @@ export default function CareersPage() {
               required
             />
           </div>
+          
 
           <div className="pt-4 text-center">
             <button type="submit" disabled={loading} className="bg-[#243bb5] hover:bg-blue-800 text-white px-10 py-4 rounded-full text-lg font-bold w-full sm:w-auto transition-all shadow-lg hover:shadow-xl disabled:bg-blue-400">
