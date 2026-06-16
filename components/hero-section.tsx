@@ -1,11 +1,37 @@
 'use client'
 
+import React, { useState, useEffect } from 'react'
+import { createClient } from '@supabase/supabase-js'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { Sparkles, Heart } from 'lucide-react'
 import { ImageUploadPlaceholder } from '@/components/image-upload-placeholder'
 
+// Supabase Connection
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
+const supabase = createClient(supabaseUrl, supabaseKey);
+
 export function HeroSection() {
+  // डेटाबेस से फोटो मँगवाने के लिए State (अगर नेट न चले, तो पुरानी /main.jpg दिखेगी)
+  const [bannerUrl, setBannerUrl] = useState("/main.jpg");
+
+  // डेटाबेस से 'home_banner' वाली फोटो खींचने का कोड
+  useEffect(() => {
+    const fetchBanner = async () => {
+      const { data } = await supabase
+        .from('site_images')
+        .select('image_url')
+        .eq('section_name', 'home_banner')
+        .single();
+      
+      if (data && data.image_url) {
+        setBannerUrl(data.image_url);
+      }
+    };
+    fetchBanner();
+  }, []);
+
   return (
     <section id="home" className="relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-yellow-50 py-16 md:py-24 lg:py-32">
       {/* Decorative floating elements */}
@@ -82,9 +108,10 @@ export function HeroSection() {
 
           {/* Hero Image */}
           <div className="relative hidden lg:block">
-            <div className="relative z-10 shadow-2xl bg-white border-4 border-yellow-300 aspect-[4/3]">
-              <img src="/main.jpg" alt="Cecil Convent School" className="w-full h-full object-cover rounded-2xl" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none rounded-3xl"></div>
+            <div className="relative z-10 shadow-2xl bg-white border-4 border-yellow-300 aspect-[4/3] rounded-3xl overflow-hidden">
+              {/* ✨ ये है हमारा स्मार्ट इमेज टैग ✨ */}
+              <img src={bannerUrl} alt="Cecil Convent School" className="w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
             </div>
             {/* Decorative background shapes */}
             <div className="absolute -top-6 -right-6 w-full h-full bg-yellow-200/30 rounded-3xl -z-0"></div>
