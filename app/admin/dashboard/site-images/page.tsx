@@ -8,7 +8,7 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-// वेबसाइट के अलग-अलग हिस्से जहाँ फोटो बदलनी पड़ सकती है
+// Sections where images can be updated
 const SECTIONS = [
   { id: 'home_banner', label: 'Home Page Main Banner' },
   { id: 'principal_photo', label: 'Principal Photo' },
@@ -22,7 +22,7 @@ export default function ManageSiteImages() {
   const [uploading, setUploading] = useState(false);
   const [message, setMessage] = useState("");
 
-  // जब भी Dropdown से नया ऑप्शन चुनें, तो उसकी पुरानी फोटो दिखाएं
+  // Fetch the current image when a section is selected
   useEffect(() => {
     const fetchImage = async () => {
       setCurrentImage("");
@@ -40,14 +40,14 @@ export default function ManageSiteImages() {
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     try {
       setUploading(true);
-      setMessage("अपलोड हो रही है... ⏳");
+      setMessage("Uploading... ⏳");
       
       const file = e.target.files?.[0];
       if (!file) return;
 
-      // 1. फोटो को Storage में डालना
+      // 1. Upload to Storage
       const fileExt = file.name.split('.').pop();
-      const fileName = `${selectedSection}_${Math.random()}.${fileExt}`; // फोटो का नाम सेक्शन के नाम पर
+      const fileName = `${selectedSection}_${Math.random()}.${fileExt}`;
       
       const { error: uploadError } = await supabase.storage
         .from('school-images')
@@ -55,14 +55,14 @@ export default function ManageSiteImages() {
 
       if (uploadError) throw uploadError;
 
-      // 2. फोटो का लिंक निकालना
+      // 2. Get Public URL
       const { data: publicUrlData } = supabase.storage
         .from('school-images')
         .getPublicUrl(fileName);
       
       const imageUrl = publicUrlData.publicUrl;
 
-      // 3. Database में चेक करना कि इस सेक्शन की फोटो पहले से है या नहीं
+      // 3. Update or Insert into Database
       const { data: existingRecord } = await supabase
         .from('site_images')
         .select('*')
@@ -70,18 +70,16 @@ export default function ManageSiteImages() {
         .single();
 
       if (existingRecord) {
-        // अगर पहले से है, तो उसे Update कर दो
         await supabase.from('site_images').update({ image_url: imageUrl }).eq('section_name', selectedSection);
       } else {
-        // अगर नहीं है, तो नई Insert कर दो
         await supabase.from('site_images').insert([{ section_name: selectedSection, image_url: imageUrl }]);
       }
 
       setCurrentImage(imageUrl);
-      setMessage("✅ फोटो शानदार तरीके से अपडेट हो गई!");
+      setMessage("✅ Image updated successfully!");
     } catch (error: any) {
       console.error(error);
-      setMessage("❌ अपलोड फेल हो गया: " + error.message);
+      setMessage("❌ Upload failed: " + error.message);
     } finally {
       setUploading(false);
     }
@@ -95,7 +93,7 @@ export default function ManageSiteImages() {
 
       <div className="mb-6">
         <label className="block text-gray-700 font-bold mb-2 text-lg">
-          कौन सी फोटो बदलनी है? (Select Section)
+          Select Section to Update
         </label>
         <select 
           className="w-full border-2 border-gray-300 p-3 rounded-lg text-lg focus:outline-none focus:border-blue-500"
@@ -109,7 +107,7 @@ export default function ManageSiteImages() {
       </div>
 
       <div className="mb-8">
-        <label className="block text-gray-700 font-bold mb-2">नई फोटो चुनें (Upload New)</label>
+        <label className="block text-gray-700 font-bold mb-2">Upload New Image</label>
         <input 
           type="file" 
           accept="image/*"
@@ -122,12 +120,12 @@ export default function ManageSiteImages() {
 
       {currentImage ? (
         <div className="mt-6 border p-4 rounded-lg bg-gray-50">
-          <p className="text-sm text-gray-500 mb-2">अभी वेबसाइट पर यह फोटो लगी है (Current Image):</p>
+          <p className="text-sm text-gray-500 mb-2">Current Image on Website:</p>
           <img src={currentImage} alt="Current" className="w-full h-auto max-h-80 object-contain rounded-md shadow-sm" />
         </div>
       ) : (
         <div className="mt-6 border p-8 rounded-lg bg-gray-50 text-center">
-          <p className="text-gray-500">इस जगह के लिए अभी कोई फोटो सेट नहीं है। ऊपर से अपलोड करें।</p>
+          <p className="text-gray-500">No image is currently set for this section. Please upload one above.</p>
         </div>
       )}
     </div>
