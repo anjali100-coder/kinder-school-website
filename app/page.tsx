@@ -1,4 +1,4 @@
-
+import AnnouncementMarquee from '@/components/announcement-marquee';
 import { HeroSection } from '@/components/hero-section';
 import { AboutSection } from '@/components/about-section';
 import { PrincipalSection } from '@/components/principal-section';
@@ -15,6 +15,7 @@ export default function Home() {
     <div className="min-h-screen">
       
       <main>
+        <AnnouncementMarquee />
         
         <HeroSection />
 
