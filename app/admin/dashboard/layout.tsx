@@ -21,6 +21,15 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             👥 Teachers & Staff
           </Link>
           <li className="cursor-pointer hover:bg-blue-800 px-4 py-2 rounded-lg transition mt-8 text-red-300">
+ {/* Gallery Link */}
+          <Link href="/admin/dashboard/gallery" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 hover:text-white flex items-center gap-2">
+            <span>🖼️</span> Gallery
+          </Link>
+
+          {/* Site Images / Banner Manager Link */}
+          <Link href="/admin/dashboard/site-images" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 hover:text-white flex items-center gap-2">
+            <span>⚙️</span> Manage Site Images
+          </Link>   
             🔒 Logout
           </li>
         </ul>
