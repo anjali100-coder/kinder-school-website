@@ -3,6 +3,9 @@
 import React, { useState } from 'react';
 import { createClient } from '@supabase/supabase-js';
 
+// यहाँ हमने आपका नया मास्टर कंट्रोल बॉक्स Import कर लिया है 👇
+import DynamicContent from '@/components/DynamicContent';
+
 // Supabase Connection
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
@@ -96,7 +99,10 @@ export default function ContactPage() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+      {/* 🔥 ADMIN PANEL DYNAMIC CONTENT YAHAN DIKHEGA 🔥 */}
+      <DynamicContent pageName="Contact" />
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-8">
         
         {/* LEFT SIDE: Contact Details */}
         <div className="space-y-8">
