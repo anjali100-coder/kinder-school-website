@@ -17,23 +17,35 @@ export default function DynamicContent({ pageName }: { pageName: string }) {
         .from('website_content')
         .select('*')
         .eq('page_name', pageName)
-        .order('id', { ascending: true }); // जिस क्रम में जोड़ा है, उसी में दिखेगा
+        .order('id', { ascending: true });
         
-      if (data) setSections(data);
+      if (data) {
+        // 🔥 यहाँ हमने नया फ़िल्टर लगा दिया है!
+        // यह उन 'सेटिंग्स' को ऊपर बड़ा-बड़ा दिखने से रोकेगा।
+        const visibleSections = data.filter(
+          (sec) => sec.section_name !== 'school_address' && 
+                   sec.section_name !== 'school_phone' && 
+                   sec.section_name !== 'school_email'
+        );
+        setSections(visibleSections);
+      }
       setLoading(false);
     };
     fetchContent();
   }, [pageName]);
 
-  // अगर डेटा लोड हो रहा है या एडमिन पैनल से कुछ नहीं डाला है, तो कुछ मत दिखाओ
+  // अगर डेटा नहीं है तो कुछ मत दिखाओ
   if (loading || sections.length === 0) return null; 
 
   return (
     <div className="w-full max-w-7xl mx-auto my-8 px-4">
       {sections.map((sec) => (
         <div key={sec.id} className="mb-8 p-6 bg-white rounded-lg shadow-sm border border-gray-100">
-          {/* अगर आपने एडमिन में कोई हेडिंग डाली है तो वो यहाँ बड़ी दिखेगी */}
-          {sec.title && <h2 className="text-2xl md:text-3xl font-bold text-blue-900 mb-4">{sec.title}</h2>}
+          
+          {/* Title अगर है, और वो '-' नहीं है, तभी दिखाओ */}
+          {sec.title && sec.title.trim() !== '-' && (
+            <h2 className="text-2xl md:text-3xl font-bold text-blue-900 mb-4">{sec.title}</h2>
+          )}
           
           {/* आपका पूरा पैराग्राफ यहाँ दिखेगा */}
           <p className="text-gray-700 whitespace-pre-wrap leading-relaxed text-lg">
