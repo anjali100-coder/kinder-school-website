@@ -21,6 +21,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             👥 Teachers & Staff
           </Link>
             <Link href="/admin/dashboard/gallery" className="block cursor-pointer hover:bg-blue-800 px-4 py-2 rounded mb-2">
+          {/* Master Site Content Link */}
+          <Link href="/admin/dashboard/manage-pages" className="block cursor-pointer hover:bg-blue-800 px-4 py-2 rounded mb-2">
+            📝 Manage All Pages
+          </Link>
             🖼️ Gallery
 </Link>
 <Link href="/admin/dashboard/site-images" className="block cursor-pointer hover:bg-blue-800 px-4 py-2 rounded mb-2">
