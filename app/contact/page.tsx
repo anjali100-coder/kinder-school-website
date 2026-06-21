@@ -27,7 +27,7 @@ export default function ContactPage() {
       const { data, error } = await supabase
         .from('website_content')
         .select('*')
-        .eq('page_name', 'Contact');
+        .eq('page_name', 'Contact Page');
 
       if (data) {
         data.forEach((item) => {
