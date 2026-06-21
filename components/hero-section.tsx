@@ -5,7 +5,6 @@ import { createClient } from '@supabase/supabase-js'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { Sparkles, Heart } from 'lucide-react'
-import { ImageUploadPlaceholder } from '@/components/image-upload-placeholder'
 
 // Supabase Connection
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
@@ -13,23 +12,40 @@ const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 export function HeroSection() {
-  // डेटाबेस से फोटो मँगवाने के लिए State (अगर नेट न चले, तो पुरानी /main.jpg दिखेगी)
   const [bannerUrl, setBannerUrl] = useState("/main.jpg");
+  
+  // 👇 यहाँ हमने टेक्स्ट के लिए नए State बनाए हैं
+  const [heroHeading, setHeroHeading] = useState("Where Little Dreams Begin to Bloom");
+  const [heroText, setHeroText] = useState("At Cecil Convent School Junior Playway, we nurture young minds with love, creativity, and joy. Building a strong foundation for your child's bright future in Ambala Cantt.");
 
-  // डेटाबेस से 'home_banner' वाली फोटो खींचने का कोड
   useEffect(() => {
-    const fetchBanner = async () => {
-      const { data } = await supabase
+    const fetchHeroData = async () => {
+      // 1. फोटो मँगवाने का कोड (आपका पुराना कोड)
+      const { data: imgData } = await supabase
         .from('site_images')
         .select('image_url')
         .eq('section_name', 'home_banner')
         .single();
       
-      if (data && data.image_url) {
-        setBannerUrl(data.image_url);
+      if (imgData && imgData.image_url) {
+        setBannerUrl(imgData.image_url);
+      }
+
+      // 2. टेक्स्ट मँगवाने का नया कोड (एडमिन पैनल से)
+      const { data: textData } = await supabase
+        .from('website_content')
+        .select('*')
+        .eq('page_name', 'Home Page')
+        .order('id', { ascending: false })
+        .limit(1); // सबसे लेटेस्ट वाली एंट्री उठाएगा
+
+      if (textData && textData.length > 0) {
+        // अगर एडमिन पैनल में कुछ नया डाला है, तो उसे सेट कर दो
+        if (textData[0].section_name) setHeroHeading(textData[0].section_name);
+        if (textData[0].content) setHeroText(textData[0].content);
       }
     };
-    fetchBanner();
+    fetchHeroData();
   }, []);
 
   return (
@@ -54,40 +70,41 @@ export function HeroSection() {
             </div>
             
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-blue-900 leading-tight">
-              <span className="text-balance">Where Little </span>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-800">Dreams</span>
-              <span className="text-balance"> </span>
-              <span className="block text-yellow-500">Begin to Bloom</span>
+              {/* 👇 यहाँ जादू है: अगर टेक्स्ट पुराना है तो मल्टी-कलर, अगर नया है तो सॉलिड ब्लू */}
+              {heroHeading === "Where Little Dreams Begin to Bloom" ? (
+                <>
+                  <span className="text-balance">Where Little </span>
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-800">Dreams</span>
+                  <span className="text-balance"> </span>
+                  <span className="block text-yellow-500">Begin to Bloom</span>
+                </>
+              ) : (
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-900">
+                  {heroHeading}
+                </span>
+              )}
             </h1>
             
-            <p className="text-lg md:text-xl text-gray-700 leading-relaxed max-w-xl mx-auto lg:mx-0">
-              At Cecil Convent School Junior Playway, we nurture young minds with love, creativity, and joy. Building a strong foundation for your child&apos;s bright future in Ambala Cantt.
+            {/* 👇 Description भी अब डायनामिक हो गया है */}
+            <p className="text-lg md:text-xl text-gray-700 leading-relaxed max-w-xl mx-auto lg:mx-0 whitespace-pre-wrap">
+              {heroText}
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-  
-  {/* BUTTON 1: Start Your Journey -> Ye /journey page par lekar jayega */}
-  <Link href="/journey">
-    <Button
-      size="lg"
-      className="bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:opacity-90"
-    >
-      Start Your Journey
-    </Button>
-  </Link>
+              {/* BUTTON 1 */}
+              <Link href="/journey">
+                <Button size="lg" className="bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:opacity-90">
+                  Start Your Journey
+                </Button>
+              </Link>
 
-  {/* BUTTON 2: Learn More -> Hover karne par ab blur nahi hoga */}
-  <Link href="/about-school">
-    <Button
-      size="lg"
-      variant="outline"
-      className="border-2 border-yellow-400 text-yellow-600 hover:bg-yellow-400 hover:text-white transition-colors"
-    >
-      Learn More
-    </Button>
-  </Link>
-  
-</div>
+              {/* BUTTON 2 */}
+              <Link href="/about-school">
+                <Button size="lg" variant="outline" className="border-2 border-yellow-400 text-yellow-600 hover:bg-yellow-400 hover:text-white transition-colors">
+                  Learn More
+                </Button>
+              </Link>
+            </div>
 
             {/* Stats */}
             <div className="grid grid-cols-3 gap-4 md:gap-6 mt-12 pt-8 border-t-2 border-yellow-200">
@@ -109,7 +126,6 @@ export function HeroSection() {
           {/* Hero Image */}
           <div className="relative hidden lg:block">
             <div className="relative z-10 shadow-2xl bg-white border-4 border-yellow-300 aspect-[4/3] rounded-3xl overflow-hidden">
-              {/* ✨ ये है हमारा स्मार्ट इमेज टैग ✨ */}
               <img src={bannerUrl} alt="Cecil Convent School" className="w-full h-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
             </div>
