@@ -8,6 +8,7 @@ import { ClassPhotosSection } from '@/components/class-photos-section';
 import Testimonials from '@/components/testimonials'; // <--- Testimonials Import
 import SchoolMap from '@/components/school-map'; // <--- Map Import Kiya
 import ScrollReveal from '@/components/scroll-reveal'; // 
+import DynamicContent from '@/components/DynamicContent';
 
 
 export default function Home() {
@@ -16,6 +17,9 @@ export default function Home() {
       
       <main>
         <AnnouncementMarquee />
+        <div className="mt-4">
+          <DynamicContent pageName="Home" />
+        </div>
         
         <HeroSection />
 
