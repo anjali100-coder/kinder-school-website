@@ -50,12 +50,30 @@ export default function ManageAnnouncements() {
     setLoading(false);
   };
 
+  // 👇 यहाँ हमने Delete करने का नया फंक्शन जोड़ा है
+  const handleDeleteNotice = async (id: number) => {
+    const confirmDelete = window.confirm("Kya aap sach mein is notice ko delete karna chahte hain?");
+    if (!confirmDelete) return;
+
+    const { error } = await supabase
+      .from('announcements')
+      .delete()
+      .eq('id', id);
+
+    if (!error) {
+      alert("🗑️ Notice delete ho gaya!");
+      fetchAnnouncements(); // लिस्ट को तुरंत रिफ्रेश करने के लिए
+    } else {
+      alert("Error: " + error.message);
+    }
+  };
+
   return (
     <div>
       <h1 className="text-3xl font-bold text-gray-800 mb-8">Manage Announcements</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* ADD NEW NOTICE FORM (आपका डिज़ाइन) */}
+        {/* ADD NEW NOTICE FORM */}
         <div className="bg-white p-6 rounded-2xl shadow-md border-t-4 border-[#e2695c]">
           <h2 className="text-xl font-bold text-gray-800 mb-4">Add New Notice</h2>
           <form onSubmit={handleAddNotice} className="space-y-4">
@@ -84,7 +102,7 @@ export default function ManageAnnouncements() {
           </form>
         </div>
 
-        {/* LIST OF PUBLISHED NOTICES (आपका डिज़ाइन) */}
+        {/* LIST OF PUBLISHED NOTICES */}
         <div className="bg-white p-6 rounded-2xl shadow-md">
           <h2 className="text-xl font-bold text-gray-800 mb-4">Current Notices</h2>
           <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2">
@@ -95,7 +113,19 @@ export default function ManageAnnouncements() {
                 <div key={notice.id} className="p-4 border border-gray-200 rounded-lg hover:shadow-md transition">
                   <div className="flex justify-between items-start mb-2">
                     <h3 className="font-bold text-[#243bb5]">{notice.title}</h3>
-                    <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">{notice.date}</span>
+                    
+                    {/* 👇 यहाँ Date के साथ Delete बटन लगाया है */}
+                    <div className="flex items-center space-x-3">
+                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">{notice.date}</span>
+                      <button 
+                        onClick={() => handleDeleteNotice(notice.id)}
+                        className="text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 px-2 py-1 rounded text-xs font-bold transition"
+                        title="Delete this notice"
+                      >
+                        🗑️ Delete
+                      </button>
+                    </div>
+
                   </div>
                   <p className="text-gray-600 text-sm whitespace-pre-wrap">{notice.description}</p>
                 </div>
