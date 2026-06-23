@@ -3,6 +3,11 @@
 import React, { useState, useEffect } from 'react'
 import { createClient } from '@supabase/supabase-js'
 import { Trash2, Plus, FileText, ExternalLink } from 'lucide-react'
+import dynamic from 'next/dynamic'
+import 'react-quill/dist/quill.snow.css'
+
+// Editor को लोड करने का सही तरीका ताकि Vercel पर एरर न आए
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false })
 
 // Supabase Connection
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
@@ -16,7 +21,6 @@ export function ManagePages() {
   const [content, setContent] = useState('')
   const [loading, setLoading] = useState(false)
 
-  // पेज लोड होते ही डेटाबेस से सारे पेज मँगवाओ
   useEffect(() => {
     fetchPages()
   }, [])
@@ -26,12 +30,10 @@ export function ManagePages() {
     if (data) setPages(data)
   }
 
-  // नया पेज बनाने का फंक्शन
   const handleAddPage = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     
-    // Slug (URL) को साफ करना (Space की जगह - लगाना)
     const cleanSlug = slug.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '')
 
     const { error } = await supabase
@@ -39,27 +41,38 @@ export function ManagePages() {
       .insert([{ title, slug: cleanSlug, content }])
 
     if (!error) {
-      alert('🎉 नया पेज सफलतापूर्वक बन गया!')
+      alert('Page successfully created!')
       setTitle('')
       setSlug('')
       setContent('')
-      fetchPages() // लिस्ट को अपडेट करो
+      fetchPages()
     } else {
       alert('Error: ' + error.message)
     }
     setLoading(false)
   }
 
-  // पेज डिलीट करने का फंक्शन
   const handleDeletePage = async (id: string, pageTitle: string) => {
-    if (!window.confirm(`क्या आप सच में "${pageTitle}" पेज को डिलीट करना चाहते हैं?`)) return
+    if (!window.confirm(`Are you sure you want to delete "${pageTitle}"?`)) return
 
     const { error } = await supabase.from('dynamic_pages').delete().eq('id', id)
     
     if (!error) {
-      alert('🗑️ पेज हमेशा के लिए डिलीट हो गया!')
+      alert('Page deleted successfully!')
       fetchPages()
     }
+  }
+
+  // Editor के बटनों की सेटिंग (Bold, Colors, Image etc.)
+  const quillModules = {
+    toolbar: [
+      [{ 'header': [1, 2, 3, false] }],
+      ['bold', 'italic', 'underline', 'strike'],
+      [{ 'color': [] }, { 'background': [] }],
+      [{ 'list': 'ordered'}, { 'list': 'bullet' }, { 'align': [] }],
+      ['link', 'image'],
+      ['clean']
+    ],
   }
 
   return (
@@ -69,21 +82,19 @@ export function ManagePages() {
       </h2>
 
       <div className="grid lg:grid-cols-2 gap-12">
-        {/* बायाँ हिस्सा: नया पेज बनाने का फॉर्म */}
         <div className="bg-blue-50/50 p-6 rounded-xl border border-blue-100">
           <h3 className="text-xl font-bold text-blue-800 mb-6 flex items-center gap-2">
             <Plus className="w-5 h-5" /> Create New Page
           </h3>
           <form onSubmit={handleAddPage} className="space-y-4">
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-1">Page Title (हेडिंग)</label>
+              <label className="block text-sm font-semibold text-gray-700 mb-1">Page Title</label>
               <input 
                 type="text" 
                 required 
                 value={title} 
                 onChange={(e) => {
                   setTitle(e.target.value)
-                  // Title लिखते ही URL (slug) अपने आप बन जाएगा
                   if(!slug) setSlug(e.target.value.toLowerCase().replace(/ /g, '-'))
                 }}
                 className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500" 
@@ -92,7 +103,7 @@ export function ManagePages() {
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-1">URL / Slug (लिंक का नाम)</label>
+              <label className="block text-sm font-semibold text-gray-700 mb-1">URL / Slug</label>
               <div className="flex items-center">
                 <span className="bg-gray-100 border border-r-0 p-3 rounded-l-lg text-gray-500 text-sm">/</span>
                 <input 
@@ -106,29 +117,29 @@ export function ManagePages() {
               </div>
             </div>
 
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-1">Page Content (पूरा टेक्स्ट)</label>
-              <textarea 
-                required 
-                rows={6}
-                value={content} 
-                onChange={(e) => setContent(e.target.value)}
-                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500" 
-                placeholder="Write all the details here..." 
-              />
+            <div className="pb-12">
+              <label className="block text-sm font-semibold text-gray-700 mb-1">Page Content</label>
+              <div className="bg-white rounded-lg">
+                <ReactQuill 
+                  theme="snow"
+                  value={content} 
+                  onChange={setContent}
+                  modules={quillModules}
+                  className="h-64"
+                />
+              </div>
             </div>
 
             <button 
               type="submit" 
               disabled={loading}
-              className="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
+              className="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition disabled:opacity-50 mt-8"
             >
-              {loading ? 'Creating Page...' : 'Publish Page'}
+              {loading ? 'Publishing...' : 'Publish Page'}
             </button>
           </form>
         </div>
 
-        {/* दायाँ हिस्सा: बने हुए पेजों की लिस्ट और Delete बटन */}
         <div>
           <h3 className="text-xl font-bold text-gray-800 mb-6">Existing Pages</h3>
           

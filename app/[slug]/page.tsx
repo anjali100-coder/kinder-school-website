@@ -22,7 +22,7 @@ export default async function DynamicPage({ params }: { params: { slug: string }
     notFound();
   }
 
-  // 4. अगर पेज मिल गया, तो उसका टाइटल और डिज़ाइन दिखा दो
+  
   return (
     <div className="min-h-screen bg-gray-50 py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden p-8 md:p-12">
@@ -31,9 +31,10 @@ export default async function DynamicPage({ params }: { params: { slug: string }
         </h1>
         
         
-        <div className="prose prose-lg text-gray-700 whitespace-pre-wrap">
-          {pageData.content}
-        </div>
+       <div 
+  className="prose prose-lg text-gray-700 max-w-none"
+  dangerouslySetInnerHTML={{ __html: pageData.content }}
+/>
       </div>
     </div>
   );
