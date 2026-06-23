@@ -18,7 +18,7 @@ export default function Home() {
       <main>
         <AnnouncementMarquee />
         <div className="mt-4">
-          <DynamicContent pageName="Home Page" />
+          
         </div>
         
         <HeroSection />
