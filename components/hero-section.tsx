@@ -12,15 +12,20 @@ const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 export function HeroSection() {
+  // 👇 1. Hydration Error को रोकने के लिए नया State (यहाँ जोड़ा गया है)
+  const [isMounted, setIsMounted] = useState(false);
+
   const [bannerUrl, setBannerUrl] = useState("/main.jpg");
   
-  // 👇 यहाँ हमने टेक्स्ट के लिए नए State बनाए हैं
   const [heroHeading, setHeroHeading] = useState("Where Little Dreams Begin to Bloom");
   const [heroText, setHeroText] = useState("At Cecil Convent School Junior Playway, we nurture young minds with love, creativity, and joy. Building a strong foundation for your child's bright future in Ambala Cantt.");
 
   useEffect(() => {
+    // 👇 2. पेज का ढाँचा रेडी होते ही इसे True कर देगा
+    setIsMounted(true);
+
     const fetchHeroData = async () => {
-      // 1. फोटो मँगवाने का कोड (आपका पुराना कोड)
+      // फोटो मँगवाने का कोड
       const { data: imgData } = await supabase
         .from('site_images')
         .select('image_url')
@@ -31,22 +36,24 @@ export function HeroSection() {
         setBannerUrl(imgData.image_url);
       }
 
-      // 2. टेक्स्ट मँगवाने का नया कोड (एडमिन पैनल से)
+      // टेक्स्ट मँगवाने का कोड
       const { data: textData } = await supabase
         .from('website_content')
         .select('*')
         .eq('page_name', 'Home Page')
         .order('id', { ascending: false })
-        .limit(1); // सबसे लेटेस्ट वाली एंट्री उठाएगा
+        .limit(1); 
 
       if (textData && textData.length > 0) {
-        // अगर एडमिन पैनल में कुछ नया डाला है, तो उसे सेट कर दो
         if (textData[0].section_name) setHeroHeading(textData[0].section_name);
         if (textData[0].content) setHeroText(textData[0].content);
       }
     };
     fetchHeroData();
   }, []);
+
+  // 👇 3. यह आख़िरी लाइन React Error #418 को पूरी तरह ब्लॉक कर देगी!
+  if (!isMounted) return null;
 
   return (
     <section id="home" className="relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-yellow-50 py-16 md:py-24 lg:py-32">
@@ -66,11 +73,10 @@ export function HeroSection() {
           {/* Content */}
           <div className="text-center lg:text-left space-y-6">
             <div className="inline-block bg-gradient-to-r from-yellow-300 to-yellow-400 text-blue-900 px-6 py-2.5 rounded-full text-sm font-bold shadow-lg hover:shadow-xl transition-shadow">
-              ✨ Welcome to Learning &amp; Play
+              ✨ Welcome to Learning & Play
             </div>
             
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-blue-900 leading-tight">
-              {/* 👇 यहाँ जादू है: अगर टेक्स्ट पुराना है तो मल्टी-कलर, अगर नया है तो सॉलिड ब्लू */}
               {heroHeading === "Where Little Dreams Begin to Bloom" ? (
                 <>
                   <span className="text-balance">Where Little </span>
@@ -85,7 +91,6 @@ export function HeroSection() {
               )}
             </h1>
             
-            {/* 👇 Description भी अब डायनामिक हो गया है */}
             <p className="text-lg md:text-xl text-gray-700 leading-relaxed max-w-xl mx-auto lg:mx-0 whitespace-pre-wrap">
               {heroText}
             </p>
