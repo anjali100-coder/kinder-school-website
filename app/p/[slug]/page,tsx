@@ -1,17 +1,24 @@
 import { createClient } from '@supabase/supabase-js'
 import { notFound } from 'next/navigation'
 
+// यह लाइन Next.js को पुराना (Cache) पेज दिखाने से रोकेगी
+export const dynamic = 'force-dynamic';
+
 // Supabase Connection
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-export default async function DynamicPage({ params }: { params: { slug: string } }) {
+export default async function DynamicPage({ params }: { params: Promise<{ slug: string }> }) {
+  
+  // Next.js के नए वर्ज़न में लिंक को ऐसे पढ़ना पड़ता है
+  const resolvedParams = await params;
+  const slug = resolvedParams.slug;
   
   const { data: page } = await supabase
     .from('dynamic_pages')
     .select('*')
-    .eq('slug', params.slug)
+    .eq('slug', slug)
     .single();
 
   if (!page) {
