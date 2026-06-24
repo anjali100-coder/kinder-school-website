@@ -136,7 +136,7 @@ export function ManagePages() {
                 <div key={page.id} className="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg hover:shadow-md transition">
                   <div>
                     <h4 className="font-bold text-blue-900 text-lg">{page.title}</h4>
-                    <a href={`/${page.slug}`} target="_blank" rel="noreferrer" className="text-sm text-blue-500 flex items-center gap-1 hover:underline mt-1">
+                    <a href={`/p/${page.slug}`} target="_blank" rel="noreferrer" className="text-sm text-blue-500 flex items-center gap-1 hover:underline mt-1">
                       /{page.slug} <ExternalLink className="w-3 h-3" />
                     </a>
                   </div>
