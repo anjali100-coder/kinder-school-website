@@ -4,11 +4,6 @@
 import React, { useState, useEffect } from 'react'
 import { createClient } from '@supabase/supabase-js'
 import { Trash2, Plus, FileText, ExternalLink } from 'lucide-react'
-import dynamic from 'next/dynamic'
-import 'react-quill/dist/quill.snow.css'
-
-// Editor को लोड करने का सही तरीका ताकि Vercel पर एरर न आए
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false })
 
 // Supabase Connection
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
@@ -64,18 +59,6 @@ export function ManagePages() {
     }
   }
 
-  // Editor के बटनों की सेटिंग (Bold, Colors, Image etc.)
-  const quillModules = {
-    toolbar: [
-      [{ 'header': [1, 2, 3, false] }],
-      ['bold', 'italic', 'underline', 'strike'],
-      [{ 'color': [] }, { 'background': [] }],
-      [{ 'list': 'ordered'}, { 'list': 'bullet' }, { 'align': [] }],
-      ['link', 'image'],
-      ['clean']
-    ],
-  }
-
   return (
     <div className="max-w-6xl mx-auto p-6 bg-white rounded-xl shadow-sm">
       <h2 className="text-2xl font-bold text-blue-900 mb-8 border-b pb-4 flex items-center gap-2">
@@ -121,12 +104,13 @@ export function ManagePages() {
             <div className="pb-12">
               <label className="block text-sm font-semibold text-gray-700 mb-1">Page Content</label>
               <div className="bg-white rounded-lg">
-                <ReactQuill 
-                  theme="snow"
-                  value={content} 
-                  onChange={setContent}
-                  modules={quillModules}
-                  className="h-64"
+                <textarea
+                  required
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
+                  className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  rows={8}
+                  placeholder="Write your page content here..."
                 />
               </div>
             </div>
