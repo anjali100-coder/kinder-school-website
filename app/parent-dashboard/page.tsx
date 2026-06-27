@@ -8,37 +8,47 @@ const supabase = createClient(
 );
 
 export default function DashboardPage() {
-  const [student, setStudent] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+  const [debugInfo, setDebugInfo] = useState<any>("Checking database connection...");
 
   useEffect(() => {
-    async function getData() {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        setLoading(false);
+    async function testDb() {
+      // 1. User Check
+      const { data: authData, error: authError } = await supabase.auth.getUser();
+      
+      if (authError || !authData?.user) {
+        setDebugInfo({ 
+          status: "Error", 
+          message: "User not logged in or Auth failed", 
+          error: authError 
+        });
         return;
       }
+
+      const userId = authData.user.id;
       
-      const { data } = await supabase
+      // 2. Database Check (बिना .single() के ताकि क्रैश न हो)
+      const { data, error } = await supabase
         .from("students")
         .select("*")
-        .eq("parent_id", user.id)
-        .single();
-        
-      setStudent(data);
-      setLoading(false);
-    }
-    getData();
-  }, []);
+        .eq("parent_id", userId);
 
-  if (loading) return <div>Loading...</div>;
-  if (!student) return <div>No data found for this parent.</div>;
+      // 3. Print Everything
+      setDebugInfo({
+        status: "Checked",
+        loggedInUserUID: userId,
+        supabaseError: error,
+        dataFoundInTable: data
+      });
+    }
+    testDb();
+  }, []);
 
   return (
     <div className="p-10">
-      <h1 className="text-2xl font-bold">Hello, {student.name}'s parent!</h1>
-      <p>Class: {student.class}</p>
-      <p>Roll Number: {student.roll_number}</p>
+      <h1 className="text-2xl font-bold text-red-600 mb-4">Debug Report</h1>
+      <pre className="bg-gray-100 p-4 border border-gray-400 rounded text-sm overflow-auto text-black">
+        {JSON.stringify(debugInfo, null, 2)}
+      </pre>
     </div>
   );
 }
