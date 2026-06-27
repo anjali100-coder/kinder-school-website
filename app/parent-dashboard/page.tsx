@@ -19,7 +19,6 @@ export default function DashboardPage() {
         return;
       }
       
-      // टेबल से डेटा फेच करें
       const { data } = await supabase
         .from("students")
         .select("*")
