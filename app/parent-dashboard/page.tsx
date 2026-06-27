@@ -1,51 +1,54 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { createClient } from "@supabase/supabase-js";
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+);
+
 export default function DashboardPage() {
+  const [student, setStudent] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchData() {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const { data: studentData } = await supabase
+        .from("students")
+        .select("*, attendance(*), fees(*), results(*)")
+        .eq("parent_id", user.id)
+        .single();
+
+      setStudent(studentData);
+      setLoading(false);
+    }
+    fetchData();
+  }, []);
+
+  if (loading) return <div className="p-10 text-center">Loading data...</div>;
+  if (!student) return <div className="p-10 text-center">No student record found.</div>;
+
   return (
-    <div className="min-h-screen bg-gray-50 p-6 md:p-12">
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen bg-gray-50 p-6">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-3xl font-bold mb-6">Hello, {student.name}'s parent!</h1>
         
-        {/* Header Section */}
-        <div className="bg-white rounded-2xl shadow-sm p-8 mb-8 border-t-4 border-blue-600">
-          <h1 className="text-3xl font-extrabold text-gray-900">Parent Dashboard</h1>
-          <p className="text-gray-500 mt-2">लॉगिन सफल! अपने बच्चे की स्कूल रिपोर्ट यहाँ देखें।</p>
-        </div>
-
-        {/* Dashboard Cards (यहाँ हम बाद में डेटाबेस से असली डेटा लाएंगे) */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-white p-6 rounded-xl shadow">
+            <h2 className="text-xl font-bold mb-4">Fee Status</h2>
+            <p className="text-2xl font-bold text-blue-600">
+              {student.fees[0]?.status || "No Data"}
+            </p>
+          </div>
           
-          {/* Attendance Card */}
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-bold text-gray-700">Attendance</h3>
-              <span className="text-2xl">📅</span>
-            </div>
-            <p className="text-gray-500 text-sm">इस महीने की हाज़िरी...</p>
-            <div className="mt-4 h-2 bg-gray-200 rounded-full">
-               <div className="h-2 bg-green-500 rounded-full" style={{ width: '80%' }}></div>
-            </div>
+          <div className="bg-white p-6 rounded-xl shadow">
+            <h2 className="text-xl font-bold mb-4">Latest Result</h2>
+            <p>{student.results[0]?.marks_obtained || "N/A"} / {student.results[0]?.total_marks || "N/A"}</p>
           </div>
-
-          {/* Fees Card */}
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-bold text-gray-700">Fee Status</h3>
-              <span className="text-2xl">💳</span>
-            </div>
-            <p className="text-gray-500 text-sm">अगली क़िस्त की जानकारी...</p>
-            <p className="mt-4 text-xl font-bold text-yellow-600">Pending</p>
-          </div>
-
-          {/* Results Card */}
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-bold text-gray-700">Latest Result</h3>
-              <span className="text-2xl">📊</span>
-            </div>
-            <p className="text-gray-500 text-sm">क्लास टेस्ट और एग्जाम रिपोर्ट...</p>
-            <p className="mt-4 font-semibold text-blue-600">View Report &rarr;</p>
-          </div>
-
         </div>
       </div>
     </div>
